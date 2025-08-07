@@ -1,0 +1,51 @@
+plugins {
+    id("org.springframework.boot") version "3.2.0"
+    id("io.spring.dependency-management") version "1.1.4"
+    id 'java'
+}
+
+group = 'org.example'
+version = '1.0-SNAPSHOT'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation("org.springframework.boot:spring-boot-starter-web")
+
+    // jpa + validation + liquibase + postgresql
+    implementation("org.springframework.boot:spring-boot-starter-data-jpa")
+    implementation("org.springframework.boot:spring-boot-starter-validation")
+    implementation("org.liquibase:liquibase-core")
+    runtimeOnly("org.postgresql:postgresql") // PostgreSQL 사용
+
+    // security
+    implementation("org.springframework.boot:spring-boot-starter-security") // Spring Security
+
+    // swagger
+    implementation("org.springdoc:springdoc-openapi-starter-webmvc-ui:2.2.0") // SpringDoc OpenAPI
+
+    // session
+    implementation("org.springframework.session:spring-session-data-redis")
+
+    // redis
+    implementation("org.springframework.boot:spring-boot-starter-data-redis") // Redis
+    implementation("org.apache.commons:commons-pool2") // Redis connection pool
+
+    // util
+    compileOnly("org.projectlombok:lombok") // Lombok
+    annotationProcessor("org.projectlombok:lombok") // Lombok annotation processor
+
+    // test
+    testImplementation platform('org.junit:junit-bom:5.10.0')
+    testImplementation('org.junit.jupiter:junit-jupiter')
+    testImplementation("org.mockito:mockito-core:5.11.0") // Mockito
+    testImplementation("org.mockito:mockito-junit-jupiter:5.11.0") // Mockito JUnit 5
+    testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine") // JUnit 5 Engine
+    testImplementation("org.springframework.boot:spring-boot-starter-test") // Spring Boot Test
+}
+
+test {
+    useJUnitPlatform()
+}
