@@ -14,7 +14,7 @@ import java.io.IOException;
 public class CustomAccessDeniedHandler implements AccessDeniedHandler {
     @Override
     public void handle(HttpServletRequest request, HttpServletResponse response, AccessDeniedException accessDeniedException) throws IOException, ServletException {
-        response.setStatus(ExceptionCode.USER_FORBIDDEN.getHttpStatus().value());
+        response.setStatus(ExceptionCode.FORBIDDEN_USER.getHttpStatus().value());
         response.setContentType("application/json");
         response.setCharacterEncoding("UTF-8");
 
@@ -25,8 +25,8 @@ public class CustomAccessDeniedHandler implements AccessDeniedHandler {
                     "details": "%s"
                 }
                 """.formatted(
-                ExceptionCode.USER_FORBIDDEN.getCode(),
-                ExceptionCode.USER_FORBIDDEN.getDescription(),
+                ExceptionCode.FORBIDDEN_USER.getCode(),
+                ExceptionCode.FORBIDDEN_USER.getDescription(),
                 accessDeniedException.getMessage()
         ));
     }

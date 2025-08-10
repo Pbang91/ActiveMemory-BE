@@ -1,24 +1,17 @@
 package com.example.activememory.global.security;
 
-import lombok.Getter;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Collection;
 import java.util.UUID;
 
-public class CustomUserDetail implements UserDetails {
-    @Getter
-    private final UUID userId;
-    private final String password;
-    private final Collection<? extends GrantedAuthority> authorities;
-
-    public CustomUserDetail(UUID userId, String password, Collection<? extends GrantedAuthority> authorities) {
-        this.userId = userId;
-        this.password = password;
-        this.authorities = authorities;
-    }
-
+public record CustomUserDetail(
+        UUID userId,
+        String password,
+        String deviceId,
+        Collection<? extends GrantedAuthority> authorities
+) implements UserDetails {
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return authorities;
@@ -36,17 +29,17 @@ public class CustomUserDetail implements UserDetails {
 
     @Override
     public boolean isAccountNonExpired() {
-        return false;
+        return true;
     }
 
     @Override
     public boolean isAccountNonLocked() {
-        return false;
+        return true;
     }
 
     @Override
     public boolean isCredentialsNonExpired() {
-        return false;
+        return true;
     }
 
     @Override

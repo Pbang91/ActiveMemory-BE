@@ -25,7 +25,7 @@ import java.util.Map;
 public class SwaggerConfig {
     @Bean
     public OpenAPI customOpenAPI() {
-        final String securitySchemeName = "JSESSIONID";
+        final String securitySchemeName = "BearerAuth";
 
         return new OpenAPI()
                 .addSecurityItem(new SecurityRequirement().addList(securitySchemeName))
@@ -33,10 +33,10 @@ public class SwaggerConfig {
                         new Components().addSecuritySchemes(
                                 securitySchemeName,
                                 new SecurityScheme()
-                                        .name(securitySchemeName)
+                                        .name("Authorization")
                                         .type(SecurityScheme.Type.APIKEY)
-                                        .in(SecurityScheme.In.COOKIE)
-                                        .name(securitySchemeName)
+                                        .scheme("bearer")
+                                        .name("JWT")
                         )
                 );
     }

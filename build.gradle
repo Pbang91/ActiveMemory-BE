@@ -18,16 +18,18 @@ dependencies {
     implementation("org.springframework.boot:spring-boot-starter-data-jpa")
     implementation("org.springframework.boot:spring-boot-starter-validation")
     implementation("org.liquibase:liquibase-core")
-    runtimeOnly("org.postgresql:postgresql") // PostgreSQL 사용
+    runtimeOnly("org.postgresql:postgresql")
 
     // security
-    implementation("org.springframework.boot:spring-boot-starter-security") // Spring Security
+    implementation("org.springframework.boot:spring-boot-starter-security")
 
     // swagger
-    implementation("org.springdoc:springdoc-openapi-starter-webmvc-ui:2.2.0") // SpringDoc OpenAPI
+    implementation("org.springdoc:springdoc-openapi-starter-webmvc-ui:2.2.0")
 
-    // session
-    implementation("org.springframework.session:spring-session-data-redis")
+    // jwt
+    implementation("io.jsonwebtoken:jjwt-api:0.12.3") // JWT API
+    runtimeOnly("io.jsonwebtoken:jjwt-impl:0.12.3") // JWT 구현체
+    runtimeOnly("io.jsonwebtoken:jjwt-jackson:0.12.3") // Jackson을 사용한 JWT 구현체
 
     // redis
     implementation("org.springframework.boot:spring-boot-starter-data-redis") // Redis
@@ -36,6 +38,8 @@ dependencies {
     // util
     compileOnly("org.projectlombok:lombok") // Lombok
     annotationProcessor("org.projectlombok:lombok") // Lombok annotation processor
+    implementation("com.aventrix.jnanoid:jnanoid:2.0.0") // nano id
+    implementation("com.github.f4b6a3:uuid-creator:6.1.0") // uuid versioning generator
 
     // test
     testImplementation platform('org.junit:junit-bom:5.10.0')

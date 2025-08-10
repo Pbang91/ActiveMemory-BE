@@ -15,7 +15,7 @@ import java.io.IOException;
 public class CustomAuthenticationEntryPoint implements AuthenticationEntryPoint {
     @Override
     public void commence(HttpServletRequest request, HttpServletResponse response, AuthenticationException authException) throws IOException, ServletException {
-        response.setStatus(ExceptionCode.TOKEN_INVALID.getHttpStatus().value()); // 401
+        response.setStatus(ExceptionCode.INVALID_TOKEN.getHttpStatus().value()); // 401
         response.setContentType(MediaType.APPLICATION_JSON_VALUE);
         response.setCharacterEncoding("UTF-8");
 
@@ -26,8 +26,8 @@ public class CustomAuthenticationEntryPoint implements AuthenticationEntryPoint 
                   "details": "%s"
                 }
                 """.formatted(
-                ExceptionCode.TOKEN_INVALID.getCode(),
-                ExceptionCode.TOKEN_INVALID.getDescription(),
+                ExceptionCode.INVALID_TOKEN.getCode(),
+                ExceptionCode.INVALID_TOKEN.getDescription(),
                 authException.getMessage())
         );
     }

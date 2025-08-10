@@ -1,4 +1,4 @@
-package com.example.activememory.global.dto;
+package com.example.activememory.global.api;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 

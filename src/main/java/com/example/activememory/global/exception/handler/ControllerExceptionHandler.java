@@ -1,7 +1,6 @@
 package com.example.activememory.global.exception.handler;
 
-import com.example.activememory.global.dto.ExceptionResDto;
-import com.example.activememory.global.exception.CustomException;
+import com.example.activememory.global.api.ExceptionResDto;
 import com.example.activememory.global.exception.ExceptionCode;
 import com.example.activememory.global.log.CustomLogger;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -31,18 +30,6 @@ public class ControllerExceptionHandler extends ResponseEntityExceptionHandler {
     public ControllerExceptionHandler(ObjectMapper objectMapper) {
     this.objectMapper = objectMapper;
 }
-
-    @ExceptionHandler(CustomException.class)
-    public final ResponseEntity<ExceptionResDto> handleCustomException(CustomException ex) {
-        ExceptionCode errorCode = ex.getErrorCode();
-        ExceptionResDto apiExceptionResDto = new ExceptionResDto(
-                errorCode.getCode(),
-                errorCode.getDescription(),
-                ex.getDetails()
-        );
-
-        return new ResponseEntity<>(apiExceptionResDto, errorCode.getHttpStatus());
-    }
 
     @ExceptionHandler(Exception.class)
     public final ResponseEntity<ExceptionResDto> handleAllUnhandledException(Exception ex, WebRequest request) {
