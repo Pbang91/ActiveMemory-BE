@@ -4,7 +4,7 @@ import com.example.activememory.global.api.ApiResponseUtil;
 import com.example.activememory.global.api.SuccessResDto;
 import com.example.activememory.global.security.CustomUserDetail;
 import com.example.activememory.user.application.command.dto.response.AuthTokenResDto;
-import com.example.activememory.user.presentation.command.dto.*;
+import com.example.activememory.user.presentation.command.dto.request.*;
 import io.swagger.v3.oas.annotations.Hidden;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -32,7 +32,7 @@ public class UserCommandController {
             description = "인증이 완료되면, 회원 등록 후 클라이언트의 지정된 주소로 임시 코드가 담긴 후 redirect를 진행합니다"
     )
     public RedirectView authWithKakaoToken(
-            @Valid @RequestBody AuthWithKakaoTokenDto dto
+            @Valid @RequestBody AuthWithKakaoTokenReqDto dto
     ) {
         return new RedirectView("/");
     }
@@ -46,7 +46,7 @@ public class UserCommandController {
             description = "인증이 완료되면, 회원 등록 후 클라이언트의 지정된 주소로 임시 코드가 담긴 후 redirect를 진행합니다."
     )
     public RedirectView callBackKakaoAccountAuthentication(
-            @ModelAttribute CallBackKakaoAccountAuthenticationDto dto
+            @ModelAttribute CallBackKakaoAccountAuthenticationReqDto dto
     ) {
         return new RedirectView("/");
     }
@@ -59,7 +59,7 @@ public class UserCommandController {
             description = "인증이 완료되면, 회원 등록 후 클라이언트의 지정된 주소로 임시 코드가 담긴 후 redirect를 진행합니다"
     )
     public RedirectView authWithAppleCredential(
-            @Valid @RequestBody AuthWithAppleCredentialDto dto
+            @Valid @RequestBody AuthWithAppleCredentialReqDto dto
     ) {
         return new RedirectView("/");
     }
@@ -73,7 +73,7 @@ public class UserCommandController {
             description = "인증이 완료되면, 회원 등록 후 클라이언트의 지정된 주소로 임시 코드가 담긴 후 redirect를 진행합니다"
     )
     public RedirectView callBackAppleAccountAuthentication(
-            @ModelAttribute CallBackAppleAccountAuthentication dto
+            @ModelAttribute CallBackAppleAccountAuthenticationReqDto dto
     ) {
         return new RedirectView("/");
     }
@@ -95,7 +95,7 @@ public class UserCommandController {
     @ResponseStatus(HttpStatus.CREATED)
     @Operation(summary = "RefreshToken을 이용해 Auth Token을 갱신하는 API")
     public ResponseEntity<SuccessResDto<AuthTokenResDto>> refresh(
-            @Valid @RequestBody RefreshTokenDto dto
+            @Valid @RequestBody RefreshTokenReqDto dto
     ) {
         return ApiResponseUtil.success(new AuthTokenResDto("", ""), HttpStatus.CREATED);
     }
@@ -127,7 +127,7 @@ public class UserCommandController {
     @Operation(summary = "회원이 프로필 정보를 수정하는 API")
     public ResponseEntity<Void>  updateProfile(
             @AuthenticationPrincipal CustomUserDetail userDetails,
-            @Valid UpdateProfileDto dto
+            @Valid UpdateProfileReqDto dto
     ) {
         UUID userId = userDetails.userId();
 

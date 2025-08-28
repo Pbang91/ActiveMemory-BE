@@ -1,4 +1,4 @@
-package com.example.activememory.user.presentation.command.dto;
+package com.example.activememory.user.presentation.command.dto.request;
 
 import com.example.activememory.global.exception.CustomException;
 import com.example.activememory.global.exception.ExceptionCode;
@@ -6,7 +6,7 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.URL;
 
-public record UpdateProfileDto(
+public record UpdateProfileReqDto(
         @Schema(description = "닉네임", requiredMode = Schema.RequiredMode.NOT_REQUIRED, nullable = true)
         @Length(max = 30) String nickname,
 
@@ -16,7 +16,7 @@ public record UpdateProfileDto(
         @Schema(description = "소개글", requiredMode = Schema.RequiredMode.NOT_REQUIRED, nullable = true)
         String bio
 ) {
-    public UpdateProfileDto(String nickname, String imageUrl, String bio) {
+    public UpdateProfileReqDto(String nickname, String imageUrl, String bio) {
         if (nickname != null && nickname.isBlank()) {
             throw new CustomException(ExceptionCode.INVALID_PARAMETER, "닉네임은 빈값일 수 없습니다");
         }

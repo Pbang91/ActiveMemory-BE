@@ -1,8 +1,8 @@
-package com.example.activememory.user.presentation.command.dto;
+package com.example.activememory.user.presentation.command.dto.request;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 
-public record CallBackKakaoAccountAuthenticationDto(
+public record CallBackKakaoAccountAuthenticationReqDto(
         @Schema(description = "kakao accessToken을 얻기 위한 임시 코드", requiredMode = Schema.RequiredMode.NOT_REQUIRED, nullable = true)
         String code,
 

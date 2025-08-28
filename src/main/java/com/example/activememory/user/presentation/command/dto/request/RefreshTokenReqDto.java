@@ -1,9 +1,9 @@
-package com.example.activememory.user.presentation.command.dto;
+package com.example.activememory.user.presentation.command.dto.request;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotEmpty;
 
-public record RefreshTokenDto(
+public record RefreshTokenReqDto(
         @NotEmpty
         @Schema(
                 description = "로그인 시 발급받은 Refresh Token",

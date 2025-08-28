@@ -1,9 +1,9 @@
-package com.example.activememory.user.presentation.command.dto;
+package com.example.activememory.user.presentation.command.dto.request;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotNull;
 
-public record AuthWithKakaoTokenDto(
+public record AuthWithKakaoTokenReqDto(
         @NotNull
         @Schema(
                 description = "네이티브 환경(카카오톡 등)에서 발급받은 토큰",
