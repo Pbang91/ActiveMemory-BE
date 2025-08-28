@@ -20,4 +20,16 @@ public class ApiResponseUtil {
 
         return new ResponseEntity<>(apiExceptionResDto, exceptionCode.getHttpStatus());
     }
+
+    public static ResponseEntity<Object> reject(ExceptionCode exceptionCode, String details, boolean asObject) {
+        // asObject 파라미터는 단순 오버로드 구분용
+        return new ResponseEntity<>(
+                new ExceptionResDto(
+                        exceptionCode.getCode(),
+                        exceptionCode.getDescription(),
+                        details
+                ),
+                exceptionCode.getHttpStatus()
+        );
+    }
 }

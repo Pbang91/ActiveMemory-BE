@@ -1,6 +1,5 @@
 package com.example.activememory.user.domain.myroutine.entity;
 
-import com.example.activememory.global.share.converter.MyRoutineIdConverter;
 import com.example.activememory.global.share.converter.UserIdConverter;
 import com.example.activememory.global.share.id.ExerciseId;
 import com.example.activememory.global.share.id.MyRoutineId;
@@ -8,7 +7,6 @@ import com.example.activememory.global.share.id.UserId;
 import com.example.activememory.global.share.enums.Visibility;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
-import lombok.Getter;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
@@ -64,6 +62,10 @@ public class MyRoutine {
         Objects.requireNonNull(name, "템플릿 이름은 필수입니다");
 
         return new MyRoutine(userId, name);
+    }
+
+    public List<MyRoutineItem> getItems() {
+        return items;
     }
 
     public MyRoutineItem addItem(

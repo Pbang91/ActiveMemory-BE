@@ -7,6 +7,6 @@ import java.lang.annotation.RetentionPolicy;
 
 @Retention(RetentionPolicy.RUNTIME)
 public @interface ExceptionData {
-    ExceptionCode errorCode();
+    ExceptionCode code();
     String details() default "";
 }

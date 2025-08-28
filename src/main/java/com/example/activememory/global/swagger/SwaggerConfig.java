@@ -53,7 +53,7 @@ public class SwaggerConfig {
                 HashMap<HttpStatus, Map<String, Example>> statusToExamples = new HashMap<>();
 
                 for (ExceptionData exceptionData : exceptionDataList) {
-                    ExceptionCode exceptionCode = exceptionData.errorCode();
+                    ExceptionCode exceptionCode = exceptionData.code();
                     String details = exceptionData.details();
 
                     Map<String, Object> exampleBody = Map.of(

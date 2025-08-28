@@ -1,5 +1,7 @@
 package com.example.activememory.user.application.query.dto.response;
 
+import com.example.activememory.global.exception.CustomException;
+import com.example.activememory.global.exception.ExceptionCode;
 import com.example.activememory.user.domain.user.enums.OAuthType;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotNull;
@@ -10,7 +12,7 @@ public record OAuthInfoResDto(
 ) {
     public OAuthInfoResDto(OAuthType type) {
         if (type == null) {
-            // TODO: 뭔가 문제 생김
+            throw new CustomException(ExceptionCode.INVALID_PARAMETER, "뭔가 잘못됨");
         }
 
         this.type = type;

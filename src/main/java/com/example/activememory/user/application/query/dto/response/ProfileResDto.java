@@ -1,5 +1,7 @@
 package com.example.activememory.user.application.query.dto.response;
 
+import com.example.activememory.global.exception.CustomException;
+import com.example.activememory.global.exception.ExceptionCode;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotEmpty;
 
@@ -19,7 +21,7 @@ public record ProfileResDto(
 ) {
     public ProfileResDto(String nickname, String imageUrl, String bio) {
         if (nickname == null || nickname.isEmpty()) {
-            // TODO: 뭔가 문제가 생김
+            throw new CustomException(ExceptionCode.INVALID_PARAMETER, "뭔가 잘못됨");
         }
 
         this.nickname = nickname;

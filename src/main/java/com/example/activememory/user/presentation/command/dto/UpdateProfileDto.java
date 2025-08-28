@@ -1,6 +1,6 @@
 package com.example.activememory.user.presentation.command.dto;
 
-import com.example.activememory.global.api.ApiResponseUtil;
+import com.example.activememory.global.exception.CustomException;
 import com.example.activememory.global.exception.ExceptionCode;
 import io.swagger.v3.oas.annotations.media.Schema;
 import org.hibernate.validator.constraints.Length;
@@ -18,7 +18,7 @@ public record UpdateProfileDto(
 ) {
     public UpdateProfileDto(String nickname, String imageUrl, String bio) {
         if (nickname != null && nickname.isBlank()) {
-            ApiResponseUtil.reject(ExceptionCode.INVALID_PARAMETER, "닉네임은 빈값일 수 없습니다");
+            throw new CustomException(ExceptionCode.INVALID_PARAMETER, "닉네임은 빈값일 수 없습니다");
         }
 
         this.nickname = nickname;

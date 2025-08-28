@@ -1,6 +1,8 @@
 package com.example.activememory.global.exception.handler;
 
+import com.example.activememory.global.api.ApiResponseUtil;
 import com.example.activememory.global.api.ExceptionResDto;
+import com.example.activememory.global.exception.CustomException;
 import com.example.activememory.global.exception.ExceptionCode;
 import com.example.activememory.global.log.CustomLogger;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -8,7 +10,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;
@@ -31,17 +32,16 @@ public class ControllerExceptionHandler extends ResponseEntityExceptionHandler {
     this.objectMapper = objectMapper;
 }
 
+    @ExceptionHandler(CustomException.class)
+    public ResponseEntity<ExceptionResDto> handleCustomException(CustomException e) {
+        return ApiResponseUtil.reject(e.getExceptionCode(), e.getDetails());
+    }
+
     @ExceptionHandler(Exception.class)
     public final ResponseEntity<ExceptionResDto> handleAllUnhandledException(Exception ex, WebRequest request) {
         CustomLogger.logError(objectMapper, logger, request, ex, ex.getMessage());
 
-        ExceptionResDto apiExceptionResDto = new ExceptionResDto(
-                "9999",
-                HttpStatus.INTERNAL_SERVER_ERROR.getReasonPhrase(),
-                ex.getMessage()
-        );
-
-        return new ResponseEntity<>(apiExceptionResDto, HttpStatus.INTERNAL_SERVER_ERROR);
+        return ApiResponseUtil.reject(ExceptionCode.INTERNAL_SERVER_ERROR, ex.getMessage());
     }
 
     @Override
@@ -59,13 +59,7 @@ public class ControllerExceptionHandler extends ResponseEntityExceptionHandler {
 
         CustomLogger.logError(objectMapper, logger, request, ex, details);
 
-        ExceptionResDto apiExceptionResDto = new ExceptionResDto(
-                ExceptionCode.INVALID_PARAMETER.getCode(),
-                ExceptionCode.INVALID_PARAMETER.getDescription(),
-                details
-        );
-
-        return new ResponseEntity<>(apiExceptionResDto, ExceptionCode.INVALID_PARAMETER.getHttpStatus());
+        return ApiResponseUtil.reject(ExceptionCode.INVALID_PARAMETER, details, true);
     }
 
     @Override
@@ -78,13 +72,7 @@ public class ControllerExceptionHandler extends ResponseEntityExceptionHandler {
         String details = "요청 형식이 잘못되었습니다. 올바른 JSON 형식을 확인해주세요.";
         CustomLogger.logError(objectMapper, logger, request, ex, details);
 
-        ExceptionResDto apiExceptionResDto = new ExceptionResDto(
-                ExceptionCode.INVALID_PARAMETER.getCode(),
-                ExceptionCode.INVALID_PARAMETER.getDescription(),
-                details + ex.getMessage()
-        );
-
-        return new ResponseEntity<>(apiExceptionResDto, ExceptionCode.INVALID_PARAMETER.getHttpStatus());
+        return ApiResponseUtil.reject(ExceptionCode.INVALID_PARAMETER, details, true);
     }
 
     @Override
@@ -97,12 +85,6 @@ public class ControllerExceptionHandler extends ResponseEntityExceptionHandler {
         String details = "필수 파라미터가 누락되었습니다. " + ex.getParameterName() + " 파라미터를 확인해주세요.";
         CustomLogger.logError(objectMapper, logger, request, ex, details);
 
-        ExceptionResDto apiExceptionResDto = new ExceptionResDto(
-                ExceptionCode.INVALID_PARAMETER.getCode(),
-                ExceptionCode.INVALID_PARAMETER.getDescription(),
-                details
-        );
-
-        return new ResponseEntity<>(apiExceptionResDto, ExceptionCode.INVALID_PARAMETER.getHttpStatus());
+        return ApiResponseUtil.reject(ExceptionCode.INVALID_PARAMETER, details, true);
     }
 }

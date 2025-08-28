@@ -2,7 +2,12 @@ package com.example.activememory.user.presentation.query;
 
 import com.example.activememory.global.api.ApiResponseUtil;
 import com.example.activememory.global.api.SuccessResDto;
+import com.example.activememory.global.exception.ExceptionCode;
+import com.example.activememory.global.exception.annotation.ExceptionData;
+import com.example.activememory.global.exception.annotation.ExceptionResponse;
 import com.example.activememory.global.security.CustomUserDetail;
+import com.example.activememory.user.application.query.dto.response.GetMyRoutineByIdResDto;
+import com.example.activememory.user.application.query.dto.response.GetMyRoutineListResDto;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -21,10 +26,10 @@ public class MyRoutineQueryController {
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
     @Operation(
-            summary = "회원이 작성한 기록 템플릿 전체를 조회하는 API",
-            description = "작성된 기록 템플릿이 없다면 Empty List 반환"
+            summary = "마이루틴 목록 전체를 조회하는 API",
+            description = "마이루틴 목록 없을 시 Empty List 반환"
     )
-    public ResponseEntity<SuccessResDto<List<?>>> getAllRecordTemplate(
+    public ResponseEntity<SuccessResDto<List<GetMyRoutineListResDto>>> getMyRoutineList(
             @AuthenticationPrincipal CustomUserDetail userDetail
     ) {
         UUID userId = userDetail.userId();
@@ -32,14 +37,19 @@ public class MyRoutineQueryController {
         return ApiResponseUtil.success(null, HttpStatus.OK);
     }
 
-    @GetMapping("/record-template/{templateId}")
+    @GetMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
-    @Operation(summary = "특정 템플릿 정보를 상세하게 조회하는 API")
-    public ResponseEntity<SuccessResDto<Void>> getRecordTemplate(
+    @Operation(summary = "특정 마이루틴의 정보를 조회하는 API")
+    @ExceptionResponse(
+            value = {
+                    @ExceptionData(code = ExceptionCode.INVALID_PARAMETER)
+            }
+    )
+    public ResponseEntity<SuccessResDto<GetMyRoutineByIdResDto>> getMyRoutineById(
             @AuthenticationPrincipal CustomUserDetail userDetail,
 
-            @Parameter(name = "templateId", description = "recordTemplate id", required = true)
-            @PathVariable(name = "templateId") String templateId
+            @Parameter(name = "id", description = "myRoutine id", required = true)
+            @PathVariable(name = "id") Long myRoutineId
     ) {
         UUID userId = userDetail.userId();
 

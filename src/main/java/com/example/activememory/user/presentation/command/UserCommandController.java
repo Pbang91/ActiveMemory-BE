@@ -5,6 +5,7 @@ import com.example.activememory.global.api.SuccessResDto;
 import com.example.activememory.global.security.CustomUserDetail;
 import com.example.activememory.user.application.command.dto.response.AuthTokenResDto;
 import com.example.activememory.user.presentation.command.dto.*;
+import io.swagger.v3.oas.annotations.Hidden;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.security.SecurityRequirements;
@@ -36,12 +37,13 @@ public class UserCommandController {
         return new RedirectView("/");
     }
 
+    @Hidden
     @SecurityRequirements
     @GetMapping("/oauth/kakao/callback")
     @ResponseStatus(HttpStatus.FOUND)
     @Operation(
-            summary = "카카오 계정을 이용해 발급받은 인증 코드를 이용해 서비스 인증을 진행하는 API",
-            description = "인증이 완료되면, 회원 등록 후 클라이언트의 지정된 주소로 임시 코드가 담긴 후 redirect를 진행합니다"
+            summary = "카카오 계정을 이용해 발급받은 인증 코드를 이용해 서비스 인증을 진행하는 카카오 전용 웹훅 API",
+            description = "인증이 완료되면, 회원 등록 후 클라이언트의 지정된 주소로 임시 코드가 담긴 후 redirect를 진행합니다."
     )
     public RedirectView callBackKakaoAccountAuthentication(
             @ModelAttribute CallBackKakaoAccountAuthenticationDto dto
@@ -62,11 +64,12 @@ public class UserCommandController {
         return new RedirectView("/");
     }
 
+    @Hidden
     @SecurityRequirements
     @PostMapping(value = "/oauth/apple/callback", consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
     @ResponseStatus(HttpStatus.FOUND)
     @Operation(
-            summary = "애플 계정을 이용해 발급받은 인증 코드를 이용해 서비스 인증을 진행하는 API",
+            summary = "애플 계정을 이용해 발급받은 인증 코드를 이용해 서비스 인증을 진행하는 애플 전용 웹훅 API",
             description = "인증이 완료되면, 회원 등록 후 클라이언트의 지정된 주소로 임시 코드가 담긴 후 redirect를 진행합니다"
     )
     public RedirectView callBackAppleAccountAuthentication(

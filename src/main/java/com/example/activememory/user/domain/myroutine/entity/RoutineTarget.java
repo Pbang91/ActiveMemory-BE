@@ -2,10 +2,12 @@ package com.example.activememory.user.domain.myroutine.entity;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Embeddable;
+import lombok.Getter;
 
 import java.math.BigDecimal;
 import java.util.Objects;
 
+@Getter
 @Embeddable
 public class RoutineTarget {
     @Column(nullable = false, columnDefinition = "smallint")
