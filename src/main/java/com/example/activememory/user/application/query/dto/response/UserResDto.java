@@ -1,7 +1,7 @@
 package com.example.activememory.user.application.query.dto.response;
 
-import com.example.activememory.user.domain.user.entity.OAuthInfo;
-import com.example.activememory.user.domain.user.entity.Profile;
+import com.example.activememory.user.domain.user.vo.OAuthInfo;
+import com.example.activememory.user.domain.user.vo.Profile;
 import com.example.activememory.user.domain.user.entity.User;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Getter;

@@ -1,4 +1,4 @@
-package com.example.activememory.user.domain.user.entity;
+package com.example.activememory.user.domain.user.vo;
 
 import com.example.activememory.user.domain.user.enums.OAuthType;
 import jakarta.persistence.*;
@@ -27,7 +27,7 @@ public class OAuthInfo {
         this.accessToken = oauthAccessToken;
     }
 
-    static OAuthInfo of(String oauthId, OAuthType oauthType, String oauthAccessToken) {
+    public static OAuthInfo of(String oauthId, OAuthType oauthType, String oauthAccessToken) {
         return new OAuthInfo(oauthId, oauthType, oauthAccessToken);
     }
 

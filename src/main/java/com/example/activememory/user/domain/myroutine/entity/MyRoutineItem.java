@@ -2,12 +2,12 @@ package com.example.activememory.user.domain.myroutine.entity;
 
 import com.example.activememory.global.share.converter.ExerciseIdConverter;
 import com.example.activememory.global.share.id.ExerciseId;
+import com.example.activememory.user.domain.myroutine.vo.RoutineTarget;
 import jakarta.persistence.*;
 import lombok.Getter;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.math.BigDecimal;
-import java.util.Objects;
 
 @Entity
 @EntityListeners(AuditingEntityListener.class)

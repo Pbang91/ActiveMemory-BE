@@ -3,6 +3,8 @@ package com.example.activememory.user.domain.user.entity;
 import com.example.activememory.global.share.id.UserId;
 import com.example.activememory.global.share.converter.UserIdConverter;
 import com.example.activememory.user.domain.user.enums.OAuthType;
+import com.example.activememory.user.domain.user.vo.OAuthInfo;
+import com.example.activememory.user.domain.user.vo.Profile;
 import jakarta.persistence.*;
 import lombok.Getter;
 import org.springframework.data.annotation.CreatedDate;

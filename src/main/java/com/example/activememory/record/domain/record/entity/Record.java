@@ -12,10 +12,9 @@ import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 
 @Entity
 @EntityListeners(AuditingEntityListener.class)
@@ -41,9 +40,16 @@ public class Record {
     @OrderBy("displayOrder ASC")
     private List<RecordMetric> metrics = new ArrayList<>();
 
+    @OneToMany(mappedBy = "record")
+    @OrderBy("displayOrder ASC")
+    private Set<RecordImage> images = new HashSet<>();
+
     @Convert(converter = UserIdConverter.class)
     @Column(name = "user_id", nullable = false)
     private UserId authorId;
+
+    @Column(nullable = false)
+    private LocalDate workoutDate;
 
     @CreatedDate
     private LocalDateTime createdAt;
@@ -53,22 +59,23 @@ public class Record {
 
     protected Record() {}
 
-    private Record(UserId authorId, String name, String freeInput, Visibility visibility) {
+    private Record(UserId authorId, String name, String freeInput, Visibility visibility, LocalDate workoutDate) {
         this.authorId = authorId;
         this.name = name;
         this.freeInput = freeInput;
         this.visibility = visibility == null ? Visibility.PUBLIC : visibility;
+        this.workoutDate = workoutDate;
     }
 
     public RecordId getId() {
         return RecordId.of(id);
     }
 
-    public static Record create(UserId authorId, String name, String freeInput, Visibility visibility) {
+    public static Record create(UserId authorId, String name, String freeInput, Visibility visibility, LocalDate workoutDate) {
         Objects.requireNonNull(authorId, "authorId는 null이면 안됩니다");
         Objects.requireNonNull(name, "name null이면 안됩니다");
 
-        return new Record(authorId, name, freeInput, visibility);
+        return new Record(authorId, name, freeInput, visibility, workoutDate == null ? LocalDate.now() : workoutDate);
     }
 
     public void switchVisibility(Visibility visibility) {

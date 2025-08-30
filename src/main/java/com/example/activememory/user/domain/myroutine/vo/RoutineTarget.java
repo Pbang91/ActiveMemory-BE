@@ -1,4 +1,4 @@
-package com.example.activememory.user.domain.myroutine.entity;
+package com.example.activememory.user.domain.myroutine.vo;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Embeddable;

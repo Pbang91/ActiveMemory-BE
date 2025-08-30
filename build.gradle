@@ -40,6 +40,7 @@ dependencies {
     annotationProcessor("org.projectlombok:lombok") // Lombok annotation processor
     implementation("com.aventrix.jnanoid:jnanoid:2.0.0") // nano id
     implementation("com.github.f4b6a3:uuid-creator:6.1.0") // uuid versioning generator
+    implementation("org.openapitools:jackson-databind-nullable:0.2.6") // json nullable 사용
 
     // test
     testImplementation platform('org.junit:junit-bom:5.10.0')

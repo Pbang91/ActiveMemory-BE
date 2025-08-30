@@ -1,4 +1,4 @@
-package com.example.activememory.user.domain.user.entity;
+package com.example.activememory.user.domain.user.vo;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Embeddable;
@@ -26,7 +26,7 @@ public class Profile {
         this.bio = bio;
     }
 
-    static Profile of(String nickname, String imageUrl, String bio) {
+    public static Profile of(String nickname, String imageUrl, String bio) {
         String nn = normalizeNickname(nickname);
         validateNickname(nn);
         String iu = normalizeImageUrl(imageUrl);

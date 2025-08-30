@@ -10,6 +10,9 @@ import java.math.BigDecimal;
 import java.util.UUID;
 
 public record MyRoutineItemResDto(
+        @Schema(description = "MyRoutineItem id", requiredMode = Schema.RequiredMode.REQUIRED)
+        @NotNull Long id,
+
         @Schema(description = "Exercise id", requiredMode = Schema.RequiredMode.REQUIRED)
         @NotNull UUID exerciseId,
 
@@ -29,6 +32,7 @@ public record MyRoutineItemResDto(
         String memo
 ) {
     public MyRoutineItemResDto(
+            Long id,
             UUID exerciseId,
             String exerciseName,
             Short set,
@@ -36,10 +40,11 @@ public record MyRoutineItemResDto(
             BigDecimal weight,
             String memo
     ) {
-        if (exerciseId == null || exerciseName == null || set == null || rep == null || weight == null) {
+        if (id == null || exerciseId == null || exerciseName == null || set == null || rep == null || weight == null) {
             throw new CustomException(ExceptionCode.INTERNAL_SERVER_ERROR, "뭔가 아주 단단히 잘못됨");
         }
 
+        this.id = id;
         this.exerciseId = exerciseId;
         this.exerciseName = exerciseName;
         this.set = set;

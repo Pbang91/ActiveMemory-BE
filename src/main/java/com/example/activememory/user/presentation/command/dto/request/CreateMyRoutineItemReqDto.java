@@ -43,7 +43,7 @@ public record CreateMyRoutineItemReqDto(
         @DecimalMin("0.25")
         BigDecimal weight,
 
-        @Schema(description = "운동별 메모", example = "벤치는 꼭 채워야지", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
+        @Schema(description = "운동별 메모", example = "벤치는 꼭 채워야지", requiredMode = Schema.RequiredMode.NOT_REQUIRED, nullable = true)
         String memo
 ) {
 }

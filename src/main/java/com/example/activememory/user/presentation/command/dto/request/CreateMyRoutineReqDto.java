@@ -15,7 +15,7 @@ public record CreateMyRoutineReqDto(
         @NotBlank
         String name,
 
-        @Schema(description = "마이루틴 설명", example = "내 루틴", requiredMode = Schema.RequiredMode.NOT_REQUIRED, nullable = true)
+        @Schema(description = "마이루틴 설명", example = "내 루틴 설명", requiredMode = Schema.RequiredMode.NOT_REQUIRED, nullable = true)
         String description,
 
         @Schema(description = "마이루틴 공개 범위", example = "PUBLIC", requiredMode = Schema.RequiredMode.REQUIRED)
