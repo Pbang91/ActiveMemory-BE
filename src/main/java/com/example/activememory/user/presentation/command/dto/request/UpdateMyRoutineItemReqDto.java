@@ -14,21 +14,21 @@ public record UpdateMyRoutineItemReqDto(
                 example = "6",
                 minimum = "1",
                 requiredMode = Schema.RequiredMode.NOT_REQUIRED,
-                implementation = Short.class
+                implementation = Integer.class
         )
         @Min(1)
-        JsonNullable<Short> set,
+        JsonNullable<Integer> set,
 
         @Schema(
                 description = "셋트별 횟수",
                 example = "20",
                 minimum = "1",
                 requiredMode = Schema.RequiredMode.NOT_REQUIRED,
-                implementation = Short.class
+                implementation = Integer.class
         )
         @NotNull
         @Min(1)
-        JsonNullable<Short> rep,
+        JsonNullable<Integer> rep,
 
         @Schema(
                 description = "셋트별 횟수",

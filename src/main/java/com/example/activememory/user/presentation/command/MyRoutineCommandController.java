@@ -66,4 +66,27 @@ public class MyRoutineCommandController {
     ) {
         return ResponseEntity.ok().build();
     }
+
+    @DeleteMapping("/{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    @Operation(summary = "특정 마이루틴을 삭제하는 API")
+    public ResponseEntity<Void> deleteMyRoutine(
+            @Parameter(name = "id", description = "마이루틴 고유 id", required = true)
+            @PathVariable Long id
+    ) {
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+    }
+
+    @DeleteMapping("/{routineId}/items/{itemId}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    @Operation(summary = "마이루틴에 등록된 특정 운동(루틴)을 삭제하는 API")
+    public ResponseEntity<Void> deleteMyRoutineItem(
+            @Parameter(name = "routineId", description = "마이루틴 고유 id", required = true)
+            @PathVariable Long routineId,
+
+            @Parameter(name = "itemId", description = "운동 항목 고유 id", required = true)
+            @PathVariable Long itemId
+    ) {
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+    }
 }

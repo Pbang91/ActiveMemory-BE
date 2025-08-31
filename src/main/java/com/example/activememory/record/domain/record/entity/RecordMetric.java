@@ -2,10 +2,12 @@ package com.example.activememory.record.domain.record.entity;
 
 import com.example.activememory.global.share.converter.ExerciseIdConverter;
 import com.example.activememory.global.share.id.ExerciseId;
+import com.example.activememory.record.domain.record.vo.RecordMetricItem;
 import jakarta.persistence.*;
 import lombok.Getter;
 
-import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 @Entity
@@ -15,18 +17,6 @@ public class RecordMetric {
     @Getter
     private Long id;
 
-    @Column(nullable = false)
-    private Short displayOrder;
-
-    @Column(nullable = false)
-    private Short rep;
-
-    @Column(nullable = false, precision = 5, scale = 2)
-    private BigDecimal weight;
-
-    @Column
-    private String memo;
-
     @Convert(converter = ExerciseIdConverter.class)
     @Column(nullable = false, columnDefinition = "uuid")
     private ExerciseId exerciseId;
@@ -35,26 +25,48 @@ public class RecordMetric {
     @JoinColumn(nullable = false, name = "record_id")
     private Record record;
 
+    @Column(nullable = false)
+    private Short displayOrder;
+
+    @ElementCollection(fetch = FetchType.EAGER)
+    @CollectionTable(
+            name = "record_metric_item",
+            joinColumns = @JoinColumn(name = "record_metric_id"),
+            uniqueConstraints = {
+                    @UniqueConstraint(
+                            name = "uk_record_metric_item_record_metric_set_no",
+                            columnNames = {"record_metric_id", "set_no"}
+                    )
+            },
+            indexes = {
+                    @Index(name = "idx_record_metric_item_record_metric_id", columnList = "record_metric_id")
+            }
+    )
+    @OrderBy("set ASC")
+    private List<RecordMetricItem> items = new ArrayList<>();
+
     protected RecordMetric() {}
 
-    RecordMetric(ExerciseId exerciseId, Short displayOrder, Short rep, BigDecimal weight, String memo) {
-        this.exerciseId = exerciseId;
-        this.displayOrder = displayOrder;
-        this.rep = rep;
-        this.weight = weight;
-        this.memo = memo;
-    }
-
-    void assignRecord(Record record) {
+    private RecordMetric(
+            Record record,
+            ExerciseId exerciseId,
+            Short displayOrder,
+            List<RecordMetricItem> items
+    ) {
         this.record = record;
+        this.exerciseId = Objects.requireNonNull(exerciseId);
+        this.displayOrder = Objects.requireNonNull(displayOrder);
+        this.items = new ArrayList<>(items);
     }
 
-    public void change(Short displayOrder, Short rep, BigDecimal weight, String memo) {
-        if (displayOrder != null) this.displayOrder = displayOrder;
-        if (rep != null) this.rep = rep;
-        if (weight != null) this.weight = weight;
-
-        this.memo = memo;
+    static RecordMetric of(
+            Record record,
+            ExerciseId exerciseId,
+            Short displayOrder,
+            List<RecordMetricItem> items
+    ) {
+        // TODO: 검증 식 진행
+        return new RecordMetric(record, exerciseId, displayOrder, items);
     }
 
     @Override

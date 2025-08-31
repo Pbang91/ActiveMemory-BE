@@ -19,7 +19,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.UUID;
 
-@RequestMapping("/api/v1/my-routine")
+@RequestMapping("/api/v1/users/my-routine")
 @RestController
 @Tag(name = "마이루틴 Query API", description = "마이루틴 화면 전용 API 설명서")
 public class MyRoutineQueryController {

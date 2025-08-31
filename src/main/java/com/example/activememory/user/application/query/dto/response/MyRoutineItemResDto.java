@@ -20,10 +20,10 @@ public record MyRoutineItemResDto(
         @NotBlank String exerciseName,
 
         @Schema(description = "MyRoutine의 특정 운동의 목표 셋트", example = "5", requiredMode = Schema.RequiredMode.REQUIRED)
-        @NotNull Short set,
+        @NotNull Integer set,
 
         @Schema(description = "MyRoutine의 특정 운동의 셋트별 목표 횟수", example = "12", requiredMode = Schema.RequiredMode.REQUIRED)
-        @NotNull Short rep,
+        @NotNull Integer rep,
 
         @Schema(description = "MyRoutine의 특정 운동의 횟수당 무게. 기본 단위 kg", example = "125.50", requiredMode = Schema.RequiredMode.REQUIRED)
         @NotNull BigDecimal weight,
@@ -35,8 +35,8 @@ public record MyRoutineItemResDto(
             Long id,
             UUID exerciseId,
             String exerciseName,
-            Short set,
-            Short rep,
+            Integer set,
+            Integer rep,
             BigDecimal weight,
             String memo
     ) {

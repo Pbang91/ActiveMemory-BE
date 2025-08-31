@@ -6,6 +6,7 @@ import com.example.activememory.global.share.id.ExerciseId;
 import com.example.activememory.global.share.id.RecordId;
 import com.example.activememory.global.share.id.UserId;
 import com.example.activememory.global.share.enums.Visibility;
+import com.example.activememory.record.domain.record.vo.RecordMetricItem;
 import jakarta.persistence.*;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
@@ -15,6 +16,7 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.*;
+import java.util.concurrent.atomic.AtomicReference;
 
 @Entity
 @EntityListeners(AuditingEntityListener.class)
@@ -86,9 +88,25 @@ public class Record {
         }
     }
 
-    public RecordMetric addMetric(ExerciseId exerciseId, Short displayOrder, Short rep, BigDecimal weight, String memo) {
-        RecordMetric recordMetric = new RecordMetric(exerciseId, displayOrder, rep, weight, memo);
-        recordMetric.assignRecord(this);
+    public RecordMetric addMetric(ExerciseId exerciseId, Short displayOrder, List<Map<String, Object>> itemData) {
+        AtomicReference<Short> seqRef = new AtomicReference<>((short) 1);
+
+        List<RecordMetricItem> items = itemData
+                .stream()
+                .map(i -> {
+                    RecordMetricItem rmi = RecordMetricItem.of(
+                            seqRef.get(),
+                            (Short) i.get("rep"),
+                            (BigDecimal) i.get("weight"),
+                            (String) i.get("memo"));
+
+                    seqRef.set((short) (seqRef.get() + Short.valueOf((short) 1)));
+
+                    return rmi;
+                })
+                .toList();
+
+        RecordMetric recordMetric = RecordMetric.of(this, exerciseId, displayOrder, items);
         metrics.add(recordMetric);
 
         return recordMetric;
