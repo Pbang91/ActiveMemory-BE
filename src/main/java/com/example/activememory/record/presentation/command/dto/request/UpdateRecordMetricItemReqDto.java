@@ -4,45 +4,32 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.DecimalMin;
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
-import jakarta.validation.constraints.NotNull;
 import org.openapitools.jackson.nullable.JsonNullable;
 
 import java.math.BigDecimal;
 
-public record CreateRecordMetricItemReqDto(
-        @Schema(
-                description = "set num",
-                example = "1",
-                minimum = "1",
-                maximum = "32767",
-                requiredMode = Schema.RequiredMode.REQUIRED
-        )
-        @NotNull
-        @Min(1)
-        @Max(32767)
-        Integer set,
-
+public record UpdateRecordMetricItemReqDto(
         @Schema(
                 description = "해당 세트에 수행한 횟수",
                 example = "10",
                 minimum = "1",
                 maximum = "32767",
-                requiredMode = Schema.RequiredMode.REQUIRED
+                requiredMode = Schema.RequiredMode.NOT_REQUIRED,
+                implementation =  Integer.class
         )
-        @NotNull
         @Min(1)
         @Max(32767)
-        Integer rep,
+        JsonNullable<Integer> rep,
 
         @Schema(
                 description = "회당 무게",
                 example = "50.5",
                 minimum = "0.25",
-                requiredMode = Schema.RequiredMode.REQUIRED
+                requiredMode = Schema.RequiredMode.NOT_REQUIRED,
+                implementation = BigDecimal.class
         )
-        @NotNull
         @DecimalMin("0.25")
-        BigDecimal weight,
+        JsonNullable<BigDecimal> weight,
 
         @Schema(
                 description = "세트당 메모",
