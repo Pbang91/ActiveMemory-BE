@@ -54,7 +54,7 @@ public record GetRecordsResDto(
                 requiredMode = Schema.RequiredMode.REQUIRED,
                 defaultValue = "0"
         )
-        Long commentCount,
+        long commentCount,
 
         @Schema(
                 description = "기록에 등록된 좋아요 수",
@@ -62,7 +62,7 @@ public record GetRecordsResDto(
                 requiredMode = Schema.RequiredMode.REQUIRED,
                 defaultValue = "0"
         )
-        Long likeCount
+        long likeCount
 ) {
     public GetRecordsResDto(
             Long id,
@@ -71,8 +71,8 @@ public record GetRecordsResDto(
             String freeInput,
             Visibility visibility,
             List<GetRecordsMetricResDto> metricList,
-            Long commentCount,
-            Long likeCount
+            long commentCount,
+            long likeCount
     ) {
         this.id = Objects.requireNonNull(id);
         this.name = Objects.requireNonNull(name);

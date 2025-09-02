@@ -79,7 +79,8 @@ public class SecurityConfig {
                                 .permitAll()
                                 .requestMatchers(
                                         HttpMethod.GET,
-                                        "/api/v1/users/oauth/kakao/callback"
+                                        "/api/v1/users/oauth/kakao/callback",
+                                        "/api/v1/feed/**"
                                 )
                                 .permitAll()
                                 .anyRequest().authenticated()

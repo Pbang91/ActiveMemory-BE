@@ -1,6 +1,7 @@
 package com.example.activememory.record.presentation.command;
 
 import com.example.activememory.global.security.CustomUserDetail;
+import com.example.activememory.record.presentation.command.dto.request.CommentReqDto;
 import com.example.activememory.record.presentation.command.dto.request.CreateRecordReqDto;
 import com.example.activememory.record.presentation.command.dto.request.UpdateRecordMetricItemReqDto;
 import com.example.activememory.record.presentation.command.dto.request.UpdateRecordReqDto;
@@ -8,10 +9,14 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.UUID;
 
 @RequestMapping("/api/v1/records")
 @RestController
@@ -64,6 +69,66 @@ public class RecordCommandController {
             @Parameter(name = "id", description = "record id", required = true)
             @PathVariable Long id
     ) {
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+    }
+
+    @PutMapping("/{slug}/like")
+    @ResponseStatus(HttpStatus.OK)
+    @Operation(summary = "특정 기록에 좋아요를 등록, 해제하는 API", description = "좋아요가 등록된 상태면 해제(삭제)를 수행합니다")
+    public ResponseEntity<Void> likeRecord(
+            @AuthenticationPrincipal CustomUserDetail userDetail,
+
+            @Parameter(name = "slug", description = "record slug", required = true)
+            @PathVariable @NotBlank String slug
+    ) {
+        UUID userId = userDetail.userId();
+
+        return ResponseEntity.ok().build();
+    }
+
+    @PostMapping("/{slug}/comment")
+    @ResponseStatus(HttpStatus.CREATED)
+    @Operation(summary = "특정 기록에 댓글을 등록하는 API")
+    public ResponseEntity<Void> createComment(
+            @AuthenticationPrincipal CustomUserDetail userDetail,
+
+            @Parameter(name = "slug", description = "record slug", required = true)
+            @PathVariable @NotBlank String slug,
+
+            @Valid @RequestBody CommentReqDto dto
+    ) {
+        UUID userId = userDetail.userId();
+
+        return ResponseEntity.status(HttpStatus.CREATED).build();
+    }
+
+    @PutMapping("/{slug}/comment")
+    @ResponseStatus(HttpStatus.OK)
+    @Operation(summary = "특정 기록의 특정 댓글을 수정하는 API")
+    public ResponseEntity<Void> updateComment(
+            @AuthenticationPrincipal CustomUserDetail userDetail,
+
+            @Parameter(name = "slug", description = "record slug", required = true)
+            @PathVariable @NotBlank String slug,
+
+            @Valid @RequestBody CommentReqDto dto
+    ) {
+        UUID userId = userDetail.userId();
+
+        return ResponseEntity.ok().build();
+    }
+
+    @DeleteMapping("/{slug}/comment/{commentId}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    @Operation(summary = "특정 기록의 특정 댓글을 삭제하는 API")
+    public ResponseEntity<Void> deleteComment(
+            @AuthenticationPrincipal CustomUserDetail userDetail,
+
+            @Parameter(name = "slug", description = "record slug", required = true)
+            @PathVariable @NotBlank String slug
+    ) {
+        UUID userId = userDetail.userId();
+
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
 }
