@@ -1,16 +1,13 @@
 package com.example.activememory.record.application.query.dto.response;
 
-import io.swagger.v3.oas.annotations.media.ArraySchema;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 
-import java.util.List;
 import java.util.Objects;
 import java.util.UUID;
 
-public record GetRecordMetricResDto(
+public record GetRecordsMetricResDto(
         @Schema(description = "RecordMetric id", example = "12", requiredMode = Schema.RequiredMode.REQUIRED)
         @NotNull
         Long id,
@@ -25,36 +22,12 @@ public record GetRecordMetricResDto(
 
         @Schema(description = "display order", example = "3", requiredMode = Schema.RequiredMode.REQUIRED)
         @NotNull
-        Integer displayOrder,
-
-        @ArraySchema(
-                schema = @Schema(
-                        description = "해당 운동의 세트별 정보",
-                        implementation = GetRecordMetricItemResDto.class
-                ),
-                arraySchema = @Schema(
-                        requiredMode = Schema.RequiredMode.REQUIRED
-                )
-        )
-        @NotEmpty
-        List<GetRecordMetricItemResDto> setList
+        Integer displayOrder
 ) {
-    public GetRecordMetricResDto(
-            Long id,
-            UUID exerciseId,
-            String exerciseName,
-            Integer displayOrder,
-            List<GetRecordMetricItemResDto> setList
-    ) {
+    public GetRecordsMetricResDto(Long id, UUID exerciseId, String exerciseName, Integer displayOrder) {
         this.id = Objects.requireNonNull(id);
         this.exerciseId = Objects.requireNonNull(exerciseId);
         this.exerciseName = Objects.requireNonNull(exerciseName);
         this.displayOrder = Objects.requireNonNull(displayOrder);
-
-        if (setList == null || setList.isEmpty()) {
-            throw new NullPointerException("뭔가 잘못");
-        }
-
-        this.setList = setList;
     }
 }

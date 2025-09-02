@@ -19,18 +19,18 @@ public record GetRecordResDto(
         String name,
 
         @Schema(
-            description = "record slug. 공유용 record unique id. visibility가 PUBLIC이어야 전달됩니다",
-            example = "nfuqpzn",
-            requiredMode = Schema.RequiredMode.REQUIRED,
-            nullable = true
+                description = "record slug. 공유용 record unique id. visibility가 PUBLIC이어야 전달됩니다",
+                example = "nfuqpzn",
+                requiredMode = Schema.RequiredMode.REQUIRED,
+                nullable = true
         )
         String slug,
 
         @Schema(
-            description = "record free input text",
-            example = "......ok?",
-            requiredMode = Schema.RequiredMode.REQUIRED,
-            nullable = true
+                description = "record free input text",
+                example = "......ok?",
+                requiredMode = Schema.RequiredMode.REQUIRED,
+                nullable = true
         )
         String freeInput,
 
@@ -46,7 +46,25 @@ public record GetRecordResDto(
                 ),
                 minItems = 0
         )
-        List<GetRecordMetricResDto> metrics
+        List<GetRecordMetricResDto> metricList,
+
+        @ArraySchema(
+                schema = @Schema(description = "좋아요 회원 목록", implementation = GetRecordLikerResDto.class),
+                arraySchema = @Schema(
+                        requiredMode = Schema.RequiredMode.REQUIRED
+                ),
+                minItems = 0
+        )
+        List<GetRecordLikerResDto> likerList,
+
+        @ArraySchema(
+                schema = @Schema(description = "댓글 관련 정보(회원 정보 포함)", implementation = GetRecordCommenterResDto.class),
+                arraySchema = @Schema(
+                        requiredMode = Schema.RequiredMode.REQUIRED
+                ),
+                minItems = 0
+        )
+        List<GetRecordCommenterResDto> commentInfoList
 ) {
     public GetRecordResDto(
             Long id,
@@ -54,13 +72,17 @@ public record GetRecordResDto(
             String slug,
             String freeInput,
             Visibility visibility,
-            List<GetRecordMetricResDto> metrics
+            List<GetRecordMetricResDto> metricList,
+            List<GetRecordLikerResDto> likerList,
+            List<GetRecordCommenterResDto> commentInfoList
     ) {
         this.id = Objects.requireNonNull(id);
         this.name = Objects.requireNonNull(name);
-        this.slug = slug;
+        this.slug = Objects.requireNonNull(slug);
         this.freeInput = freeInput;
         this.visibility = Objects.requireNonNull(visibility);
-        this.metrics = metrics;
+        this.metricList = metricList;
+        this.likerList = likerList;
+        this.commentInfoList = commentInfoList;
     }
 }

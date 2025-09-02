@@ -5,6 +5,7 @@ import com.example.activememory.global.share.converter.UserIdConverter;
 import com.example.activememory.user.domain.user.enums.OAuthType;
 import com.example.activememory.user.domain.user.vo.OAuthInfo;
 import com.example.activememory.user.domain.user.vo.Profile;
+import com.github.f4b6a3.uuid.UuidCreator;
 import jakarta.persistence.*;
 import lombok.Getter;
 import org.springframework.data.annotation.CreatedDate;
@@ -30,6 +31,9 @@ public class User {
     @Convert(converter = UserIdConverter.class)
     @Column(name = "id", nullable = false, updatable = false, columnDefinition = "uuid")
     private UserId id;
+
+    @Column(length = 30, unique = true)
+    private String slug;
 
     @Getter
     @Embedded
@@ -78,7 +82,8 @@ public class User {
         Profile pf = Profile.of(nickname, imageUrl, bio);
 
         User user = new User(oi, pf);
-        user.id = UserId.of(UUID.randomUUID());
+        user.id = UserId.of(UuidCreator.getTimeOrderedEpoch());
+
         return user;
     }
 
