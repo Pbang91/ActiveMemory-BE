@@ -8,6 +8,7 @@ import java.util.Objects;
 
 @Embeddable
 public class OAuthInfo {
+    @Getter
     @Column(name = "oauth_id", nullable = false, unique = true)
     private String id;
 

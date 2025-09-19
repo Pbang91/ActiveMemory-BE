@@ -13,7 +13,6 @@ import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.time.LocalDateTime;
-import java.util.UUID;
 
 @Entity
 @EntityListeners(AuditingEntityListener.class)
@@ -30,6 +29,7 @@ public class User {
     @Id
     @Convert(converter = UserIdConverter.class)
     @Column(name = "id", nullable = false, updatable = false, columnDefinition = "uuid")
+    @Getter
     private UserId id;
 
     @Column(length = 30, unique = true)

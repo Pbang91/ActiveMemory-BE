@@ -6,10 +6,17 @@ import jakarta.validation.constraints.NotNull;
 public record AuthWithKakaoTokenReqDto(
         @NotNull
         @Schema(
-                description = "네이티브 환경(카카오톡 등)에서 발급받은 토큰",
+                description = "네이티브 카카오톡에서 발급받은 Access 토큰",
                 example = "maybe jwt token style",
                 requiredMode = Schema.RequiredMode.REQUIRED
         )
-        String authToken
+        String accessToken,
+
+        @Schema(
+                description = "네이티브 카카오톡에서 발급받은 RefreshToken 토큰",
+                example = "maybe jwt token style",
+                requiredMode = Schema.RequiredMode.NOT_REQUIRED
+        )
+        String refreshToken
 ) {
 }

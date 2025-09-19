@@ -1,5 +1,6 @@
 package com.example.activememory.global.security;
 
+import com.example.activememory.global.share.enums.PrefixCode;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Component;
@@ -17,8 +18,7 @@ public class RedisActiveDeviceRegistry implements ActiveDeviceRegistry {
     }
 
     private String key(UUID userId) {
-        String KEY_PREFIX = "user_active_device:";
-        return KEY_PREFIX + userId;
+        return PrefixCode.ACTIVE_DEVICE + ":" + userId;
     }
 
     @Override

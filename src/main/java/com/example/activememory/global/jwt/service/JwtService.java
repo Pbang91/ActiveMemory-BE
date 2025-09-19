@@ -9,7 +9,6 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Service;
 
 import javax.crypto.SecretKey;
@@ -146,6 +145,8 @@ public class JwtService {
 
         claims.put("deviceId", deviceId);
         claims.put("typ", "refresh");
+
+        activeDeviceRegistry.setActiveDeviceId(userId, deviceId);
 
         return Jwts.builder()
                 .subject(userId.toString())

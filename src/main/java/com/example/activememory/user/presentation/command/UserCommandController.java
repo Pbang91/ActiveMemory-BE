@@ -3,7 +3,9 @@ package com.example.activememory.user.presentation.command;
 import com.example.activememory.global.api.ApiResponseUtil;
 import com.example.activememory.global.api.SuccessResDto;
 import com.example.activememory.global.security.CustomUserDetail;
+import com.example.activememory.user.application.command.UserCommandService;
 import com.example.activememory.user.application.command.dto.response.AuthTokenResDto;
+import com.example.activememory.user.domain.user.enums.OAuthType;
 import com.example.activememory.user.presentation.command.dto.request.*;
 import io.swagger.v3.oas.annotations.Hidden;
 import io.swagger.v3.oas.annotations.Operation;
@@ -24,6 +26,12 @@ import java.util.UUID;
 @RestController
 @Tag(name = "회원 Command API", description = "회원 생성, 수정, 삭제(탈퇴) 등에 대한 설명")
 public class UserCommandController {
+    private final UserCommandService userCommandService;
+
+    public UserCommandController(UserCommandService userCommandService) {
+        this.userCommandService = userCommandService;
+    }
+
     @SecurityRequirements
     @PostMapping("/oauth/kakao")
     @ResponseStatus(HttpStatus.FOUND)
@@ -34,7 +42,8 @@ public class UserCommandController {
     public RedirectView authWithKakaoToken(
             @Valid @RequestBody AuthWithKakaoTokenReqDto dto
     ) {
-        return new RedirectView("/");
+        String tempCode = userCommandService.authWithOAuthToken(OAuthType.KAKAO, dto.accessToken(), dto.refreshToken());
+        return new RedirectView("/api/v1/users/auth/token?code=" + tempCode);
     }
 
     @Hidden
@@ -83,11 +92,11 @@ public class UserCommandController {
     @ResponseStatus(HttpStatus.CREATED)
     @Operation(summary = "서비스 Auth Token을 발급받는 API",
             description = "Access 및 Refresh Token을 발급합니다")
-    public ResponseEntity<SuccessResDto<AuthTokenResDto>> authorizeUseWithCode(
+    public ResponseEntity<SuccessResDto<AuthTokenResDto>> authorizeUserWithCode(
             @Parameter(name = "code", description = "auth code", required = true)
             @RequestParam(name = "code") String code
     ) {
-        return ApiResponseUtil.success(new AuthTokenResDto("", ""), HttpStatus.CREATED);
+        return ApiResponseUtil.success(userCommandService.authorizeUserWithCode(code), HttpStatus.CREATED);
     }
 
     @SecurityRequirements
@@ -97,7 +106,7 @@ public class UserCommandController {
     public ResponseEntity<SuccessResDto<AuthTokenResDto>> refresh(
             @Valid @RequestBody RefreshTokenReqDto dto
     ) {
-        return ApiResponseUtil.success(new AuthTokenResDto("", ""), HttpStatus.CREATED);
+        return ApiResponseUtil.success(new AuthTokenResDto("", "", null), HttpStatus.CREATED);
     }
 
     @DeleteMapping
