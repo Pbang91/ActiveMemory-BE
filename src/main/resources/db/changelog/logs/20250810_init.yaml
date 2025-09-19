@@ -1,0 +1,783 @@
+databaseChangeLog:
+  # ==== users ================================================================
+  - changeSet:
+      id: user_init
+      author: ggpark
+      preConditions:
+        - onFail: MARK_RAN
+          not:
+            tableExists:
+              tableName: users
+      changes:
+        - createTable:
+            tableName: users
+            remarks: "사용자 기본 정보 + OAuth/프로필 값"
+            columns:
+              - column:
+                  name: id
+                  type: uuid
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: oauth_id
+                  type: varchar(255)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: oauth_type
+                  type: varchar(20)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: oauth_access_token
+                  type: text
+                  constraints:
+                    nullable: false
+              - column:
+                  name: nickname
+                  type: varchar(30)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: image_url
+                  type: text
+                  constraints:
+                    nullable: true
+              - column:
+                  name: bio
+                  type: text
+                  constraints:
+                    nullable: true
+              - column:
+                  name: created_at
+                  type: "timestamp without time zone"
+                  defaultValueComputed: CURRENT_TIMESTAMP
+                  constraints:
+                    nullable: false
+              - column:
+                  name: updated_at
+                  type: "timestamp without time zone"
+                  defaultValueComputed: CURRENT_TIMESTAMP
+                  constraints:
+                    nullable: false
+              - column:
+                  name: deleted_at
+                  type: "timestamp without time zone"
+                  constraints:
+                    nullable: true
+        - addUniqueConstraint:
+            tableName: users
+            columnNames: oauth_type, oauth_id
+            constraintName: uk_users_oauth
+        - addUniqueConstraint:
+            tableName: users
+            columnNames: nickname
+            constraintName: uk_users_nickname
+        - createIndex:
+            tableName: users
+            indexName: idx_users_oauth_type
+            columns:
+              - column:
+                  name: oauth_type
+      rollback:
+        - dropTable:
+            tableName: users
+  # ==== my_routine ================================================================
+  - changeSet:
+      id: my_routine_init
+      author: ggpark
+      preConditions:
+        - onFail: MARK_RAN
+          not:
+            tableExists:
+              tableName: my_routine
+      changes:
+        - createTable:
+            tableName: my_routine
+            remarks: "사용자 지정 루틴"
+            columns:
+              - column:
+                  name: id
+                  type: bigint
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: user_id
+                  type: uuid
+                  constraints:
+                    nullable: false
+              - column:
+                  name: name
+                  type: varchar(50)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: description
+                  type: text
+                  constraints:
+                    nullable: true
+              - column:
+                  name: visibility
+                  type: varchar(20)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: created_at
+                  type: "timestamp without time zone"
+                  defaultValueComputed: CURRENT_TIMESTAMP
+                  constraints:
+                    nullable: false
+              - column:
+                  name: updated_at
+                  type: "timestamp without time zone"
+                  defaultValueComputed: CURRENT_TIMESTAMP
+                  constraints:
+                    nullable: false
+        - addForeignKeyConstraint:
+            baseTableName: my_routine
+            baseColumnNames: user_id
+            referencedTableName: users
+            referencedColumnNames: id
+            constraintName: fk_my_routine_user
+            onDelete: NO ACTION
+  # ==== my_routine_item ================================================================
+  - changeSet:
+      id: my_routine_item_init
+      author: ggpark
+      preConditions:
+        - onFail: MARK_RAN
+          not:
+            tableExists:
+              tableName: my_routine_item
+      changes:
+        - createTable:
+            tableName: my_routine_item
+            remarks: "my_routine에 기록되는 운동 측정값"
+            columns:
+              - column:
+                  name: id
+                  type: bigint
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: my_routine_id
+                  type: bigint
+                  constraints:
+                    nullable: false
+              - column:
+                  name: exercise_id
+                  type: uuid
+                  constraints:
+                    nullable: false
+              - column:
+                  name: target_set
+                  type: smallint
+                  constraints:
+                    nullable: false
+              - column:
+                  name: target_rep
+                  type: smallint
+                  constraints:
+                    nullable: false
+              - column:
+                  name: target_weight
+                  type: numeric(5,2)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: memo
+                  type: varchar(100)
+                  constraints:
+                    nullable: true
+        - addUniqueConstraint:
+            tableName: my_routine_item
+            columnNames: my_routine_id, exercise_id
+            constraintName: uk_my_routine_item_my_routine_exercise
+        - addForeignKeyConstraint:
+            baseTableName: my_routine_item
+            baseColumnNames: my_routine_id
+            referencedTableName: my_routine
+            referencedColumnNames: id
+            constraintName: fk_my_routine_item_my_routine
+            onDelete: CASCADE
+        - createIndex:
+            tableName: my_routine_item
+            indexName: idx_my_routine_item_my_routine_id
+            columns:
+              - column:
+                  name: my_routine_id
+  # ==== follow ================================================================
+  - changeSet:
+      id: follow_init
+      author: ggpark
+      preConditions:
+        - onFail: MARK_RAN
+          not:
+            tableExists:
+              tableName: follow
+      changes:
+        - createTable:
+            tableName: follow
+            remarks: "팔로우 관계"
+            columns:
+              - column:
+                  name: id
+                  type: bigint
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: follower_id
+                  type: uuid
+                  constraints:
+                    nullable: false
+              - column:
+                  name: following_id
+                  type: uuid
+                  constraints:
+                    nullable: false
+              - column:
+                  name: created_at
+                  type: "timestamp without time zone"
+                  defaultValueComputed: CURRENT_TIMESTAMP
+                  constraints:
+                    nullable: false
+        - addUniqueConstraint:
+            tableName: follow
+            columnNames: follower_id, following_id
+            constraintName: uk_follow_pair
+        - createIndex:
+            tableName: follow
+            indexName: idx_follow_follower
+            columns:
+              - column:
+                  name: follower_id
+        - createIndex:
+            tableName: follow
+            indexName: idx_follow_following
+            columns:
+              - column:
+                  name: following_id
+        - sql:
+            splitStatements: false
+            sql: |
+              ALTER TABLE follow
+              ADD CONSTRAINT ck_follow_no_self
+              CHECK (follower_id <> following_id);
+      rollback:
+        - dropTable:
+            tableName: follow
+  # ==== category ================================================================
+  - changeSet:
+      id: category_init
+      author: ggpark
+      preConditions:
+        - onFail: MARK_RAN
+          not:
+            tableExists:
+              tableName: category
+      changes:
+        - createTable:
+            tableName: category
+            remarks: "운동 카테고리"
+            columns:
+              - column:
+                  name: id
+                  type: uuid
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: name
+                  type: varchar(100)
+                  constraints:
+                    nullable: false
+                    unique: true
+              - column:
+                  name: created_at
+                  type: "timestamp without time zone"
+                  defaultValueComputed: CURRENT_TIMESTAMP
+                  constraints:
+                    nullable: false
+              - column:
+                  name: updated_at
+                  type: "timestamp without time zone"
+                  defaultValueComputed: CURRENT_TIMESTAMP
+                  constraints:
+                    nullable: false
+      rollback:
+        - dropTable: { tableName: category }
+
+  # ==== exercise ========================================================
+  - changeSet:
+      id: exercise_init
+      author: ggpark
+      preConditions:
+        - onFail: MARK_RAN
+          not:
+            tableExists:
+              tableName: exercise
+      changes:
+        - createTable:
+            tableName: exercise
+            remarks: "운동 종목(벤치프레스 등)"
+            columns:
+              - column:
+                  name: id
+                  type: uuid
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: category_id
+                  type: uuid
+                  constraints:
+                    nullable: false
+              - column:
+                  name: name
+                  type: varchar(50)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: description
+                  type: text
+                  constraints:
+                    nullable: true
+              - column:
+                  name: created_at
+                  type: "timestamp without time zone"
+                  defaultValueComputed: CURRENT_TIMESTAMP
+                  constraints:
+                    nullable: false
+              - column:
+                  name: updated_at
+                  type: "timestamp without time zone"
+                  defaultValueComputed: CURRENT_TIMESTAMP
+                  constraints:
+                    nullable: false
+        - createIndex:
+            tableName: exercise
+            indexName: idx_exercise_category_id
+            columns:
+              - column: { name: category_id }
+        - addUniqueConstraint:
+            tableName: exercise
+            constraintName: uk_exercise_category_name
+            columnNames: category_id, name
+      rollback:
+        - dropTable: { tableName: exercise }
+
+  # ==== record =================================================================
+  - changeSet:
+      id: record_init
+      author: ggpark
+      preConditions:
+        - onFail: MARK_RAN
+          not:
+            tableExists:
+              tableName: record
+      changes:
+        - createTable:
+            tableName: record
+            remarks: "사용자 기록"
+            columns:
+              - column:
+                  name: id
+                  type: bigint
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: name
+                  type: varchar(50)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: slug
+                  type: varchar(30)
+                  constraints:
+                    nullable: true
+                    unique: true
+              - column:
+                  name: user_id
+                  type: uuid
+                  constraints:
+                    nullable: false
+              - column:
+                  name: free_input
+                  type: text
+                  constraints:
+                    nullable: true
+              - column:
+                  name: visibility
+                  type: varchar(20)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: created_at
+                  type: "timestamp without time zone"
+                  defaultValueComputed: CURRENT_TIMESTAMP
+                  constraints:
+                    nullable: false
+              - column:
+                  name: updated_at
+                  type: "timestamp without time zone"
+                  defaultValueComputed: CURRENT_TIMESTAMP
+                  constraints:
+                    nullable: false
+              - column:
+                  name: deleted_at
+                  type: "timestamp without time zone"
+                  constraints:
+                    nullable: true
+        - addForeignKeyConstraint:
+            baseTableName: record
+            baseColumnNames: user_id
+            referencedTableName: users
+            referencedColumnNames: id
+            constraintName: fk_record_user
+            onDelete: NO ACTION
+      rollback:
+        - dropTable: { tableName: record }
+
+  # ==== record_category_map ==========================================================
+  - changeSet:
+      id: record_category_map_init
+      author: ggpark
+      preConditions:
+        - onFail: MARK_RAN
+          not:
+            tableExists:
+              tableName: record_category_map
+      changes:
+        - createTable:
+            tableName: record_category_map
+            remarks: "기록-카테고리 맵"
+            columns:
+              - column:
+                  name: record_id
+                  type: bigint
+                  constraints:
+                    nullable: false
+              - column:
+                  name: category_id
+                  type: uuid
+                  constraints:
+                    nullable: false
+        - addPrimaryKey:
+            tableName: record_category_map
+            constraintName: pk_record_category_map
+            columnNames: record_id, category_id
+        - addForeignKeyConstraint:
+            baseTableName: record_category_map
+            baseColumnNames: record_id
+            referencedTableName: record
+            referencedColumnNames: id
+            constraintName: fk_record_category_map_record
+            onDelete: CASCADE
+
+  # ==== record_exercise_map ==========================================================
+  - changeSet:
+      id: record_exercise_map_init
+      author: ggpark
+      preConditions:
+        - onFail: MARK_RAN
+          not:
+            tableExists:
+              tableName: record_exercise_map
+      changes:
+        - createTable:
+            tableName: record_exercise_map
+            remarks: "기록-운동 맵"
+            columns:
+              - column:
+                  name: record_id
+                  type: bigint
+                  constraints:
+                    nullable: false
+              - column:
+                  name: exercise_id
+                  type: uuid
+                  constraints:
+                    nullable: false
+        - addPrimaryKey:
+            tableName: record_exercise_map
+            constraintName: pk_record_exercise_map
+            columnNames: record_id, exercise_id
+        - addForeignKeyConstraint:
+            baseTableName: record_exercise_map
+            baseColumnNames: record_id
+            referencedTableName: record
+            referencedColumnNames: id
+            constraintName: fk_record_exercise_map_record
+            onDelete: CASCADE
+        - addForeignKeyConstraint:
+            baseTableName: record_exercise_map
+            baseColumnNames: exercise_id
+            referencedTableName: exercise
+            referencedColumnNames: id
+            constraintName: fk_record_exercise_map_exercise
+            onDelete: CASCADE
+
+  # ==== record_metric ==========================================================
+  - changeSet:
+      id: record_metric_init
+      author: ggpark
+      preConditions:
+        - onFail: MARK_RAN
+          not:
+            tableExists:
+              tableName: record_metric
+      changes:
+        - createTable:
+            tableName: record_metric
+            remarks: "기록 측정 수치 입력 시 사용"
+            columns:
+              - column:
+                  name: id
+                  type: bigint
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: record_id
+                  type: bigint
+                  constraints:
+                    nullable: false
+              - column:
+                  name: exercise_id
+                  type: uuid
+                  constraints:
+                    nullable: false
+              - column:
+                  name: display_order
+                  type: smallint
+                  constraints:
+                    nullable: false
+              - column:
+                  name: rep
+                  type: smallint
+                  constraints:
+                    nullable: false
+              - column:
+                  name: weight
+                  type: numeric(5,2)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: memo
+                  type: text
+                  constraints:
+                    nullable: true
+        - addForeignKeyConstraint:
+            baseTableName: record_metric
+            baseColumnNames: record_id
+            referencedTableName: record
+            referencedColumnNames: id
+            constraintName: fk_record_metric_record
+            onDelete: CASCADE
+      rollback:
+        - dropTable: { tableName: record_metric }
+
+  # ==== tag =============================================================
+  - changeSet:
+      id: tag_init
+      author: ggpark
+      preConditions:
+        - onFail: MARK_RAN
+          not:
+            tableExists:
+              tableName: tag
+      changes:
+        - createTable:
+            tableName: tag
+            remarks: "태그"
+            columns:
+              - column:
+                  name: id
+                  type: bigint
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: name
+                  type: text
+                  constraints:
+                    nullable: false
+                    unique: true
+              - column:
+                  name: created_at
+                  type: "timestamp without time zone"
+                  defaultValueComputed: CURRENT_TIMESTAMP
+                  constraints:
+                    nullable: false
+      rollback:
+        - dropTable: { tableName: tag }
+  # ==== record_tag_map =============================================================
+  - changeSet:
+      id: record_tag_map_init
+      author: ggpark
+      preConditions:
+        - onFail: MARK_RAN
+          not:
+            tableExists:
+              tableName: record_tag_map
+      changes:
+        - createTable:
+            tableName: record_tag_map
+            remarks: "레코드 태그 맵"
+            columns:
+              - column:
+                  name: record_id
+                  type: bigint
+                  constraints:
+                    nullable: false
+              - column:
+                  name: tag_id
+                  type: bigint
+                  constraints:
+                    nullable: false
+        - addPrimaryKey:
+            tableName: record_tag_map
+            columnNames: record_id, tag_id
+            constraintName: pk_record_tag_map
+        - addForeignKeyConstraint:
+            baseTableName: record_tag_map
+            baseColumnNames: record_id
+            referencedTableName: record
+            referencedColumnNames: id
+            constraintName: fk_record_tag_map_record
+            onDelete: CASCADE
+        - addForeignKeyConstraint:
+            baseTableName: record_tag_map
+            baseColumnNames: tag_id
+            referencedTableName: tag
+            referencedColumnNames: id
+            constraintName: fk_record_tag_map_tag
+            onDelete: CASCADE
+      rollback:
+        - dropTable: { tableName: record_tag_map }
+
+  # ==== comment =========================================================
+  - changeSet:
+      id: comment_init
+      author: ggpark
+      preConditions:
+        - onFail: MARK_RAN
+          not:
+            tableExists:
+              tableName: comment
+      changes:
+        - createTable:
+            tableName: comment
+            remarks: "댓글"
+            columns:
+              - column:
+                  name: id
+                  type: bigint
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: record_id
+                  type: bigint
+                  constraints:
+                    nullable: false
+              - column:
+                  name: user_id
+                  type: uuid
+                  constraints:
+                    nullable: false
+              - column:
+                  name: content
+                  type: text
+                  constraints:
+                    nullable: false
+              - column:
+                  name: created_at
+                  type: "timestamp without time zone"
+                  defaultValueComputed: CURRENT_TIMESTAMP
+                  constraints:
+                    nullable: false
+              - column:
+                  name: updated_at
+                  type: "timestamp without time zone"
+                  defaultValueComputed: CURRENT_TIMESTAMP
+                  constraints:
+                    nullable: false
+        - addForeignKeyConstraint:
+            baseTableName: comment
+            baseColumnNames: record_id
+            referencedTableName: record
+            referencedColumnNames: id
+            constraintName: fk_comment_record
+            onDelete: CASCADE
+        - addForeignKeyConstraint:
+            baseTableName: comment
+            baseColumnNames: user_id
+            referencedTableName: users
+            referencedColumnNames: id
+            constraintName: fk_comment_user
+            onDelete: NO ACTION
+      rollback:
+        - dropTable: { tableName: comment }
+
+  # ==== like ============================================================
+  - changeSet:
+      id: like_init
+      author: ggpark
+      preConditions:
+        - onFail: MARK_RAN
+          not:
+            tableExists:
+              tableName: like
+      changes:
+        - createTable:
+            tableName: like
+            remarks: "좋아요"
+            columns:
+              - column:
+                  name: id
+                  type: bigint
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: record_id
+                  type: bigint
+                  constraints:
+                    nullable: false
+              - column:
+                  name: user_id
+                  type: uuid
+                  constraints:
+                    nullable: false
+              - column:
+                  name: created_at
+                  type: "timestamp without time zone"
+                  defaultValueComputed: CURRENT_TIMESTAMP
+                  constraints:
+                    nullable: false
+        - addUniqueConstraint:
+            tableName: like
+            columnNames: record_id, user_id
+            constraintName: uk_like_record_user
+        - addForeignKeyConstraint:
+            baseTableName: like
+            baseColumnNames: record_id
+            referencedTableName: record
+            referencedColumnNames: id
+            constraintName: fk_like_record
+            onDelete: CASCADE
+        - addForeignKeyConstraint:
+            baseTableName: like
+            baseColumnNames: user_id
+            referencedTableName: users
+            referencedColumnNames: id
+            constraintName: fk_like_user
+            onDelete: NO ACTION
+      rollback:
+        - dropTable: { tableName: like }

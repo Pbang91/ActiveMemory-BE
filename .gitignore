@@ -46,3 +46,5 @@ src/main/resources/application*.yml
 
 ### Log ###
 logs/
+
+!**/src/main/resources/db/changelog/logs
