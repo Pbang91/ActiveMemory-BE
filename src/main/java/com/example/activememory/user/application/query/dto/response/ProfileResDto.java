@@ -3,7 +3,7 @@ package com.example.activememory.user.application.query.dto.response;
 import com.example.activememory.global.exception.CustomException;
 import com.example.activememory.global.exception.ExceptionCode;
 import io.swagger.v3.oas.annotations.media.Schema;
-import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotBlank;
 
 public record ProfileResDto(
         @Schema(
@@ -11,7 +11,8 @@ public record ProfileResDto(
                 example = "dnaiql12",
                 requiredMode = Schema.RequiredMode.REQUIRED
         )
-        @NotEmpty String nickname,
+        @NotBlank
+        String nickname,
 
         @Schema(description = "프로필 이미지 주소", example = "https://....", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
         String imageUrl,
