@@ -4,7 +4,7 @@ import com.example.activememory.global.api.ApiResponseUtil;
 import com.example.activememory.global.api.ExceptionResDto;
 import com.example.activememory.global.exception.CustomException;
 import com.example.activememory.global.exception.ExceptionCode;
-import com.example.activememory.global.log.CustomLogger;
+import com.example.activememory.global.logging.CustomLogger;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;

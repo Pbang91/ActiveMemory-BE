@@ -1,3 +1,13 @@
 databaseChangeLog:
-  - includeAll:
-      path: db/changelog/logs
+  - include:
+      file: db/changelog/01-account/db.changelog-account-master.yaml
+  - include:
+      file: db/changelog/02-reference/db.changelog-reference-master.yaml
+  - include:
+      file: db/changelog/03-shared/db.changelog-shared-master.yaml
+  - include:
+      file: db/changelog/04-inventory/db.changelog-inventory-master.yaml
+  - include:
+      file: db/changelog/05-planning/db.changelog-planning-master.yaml
+  - include:
+      file: db/changelog/06-record/db.changelog-record-master.yaml

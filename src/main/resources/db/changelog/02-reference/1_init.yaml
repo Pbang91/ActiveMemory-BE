@@ -1,0 +1,117 @@
+databaseChangeLog:
+  - changeSet:
+      id: create-body-parts-table
+      author: ggpark
+      changes:
+        - createTable:
+            tableName: body_parts
+            columns:
+              - column:
+                  name: code
+                  type: varchar(10)
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: name
+                  type: varchar(40)
+                  constraints:
+                    nullable: false
+
+  - changeSet:
+      id: create-muscles-table
+      author: ggpark
+      changes:
+        - createTable:
+            tableName: muscles
+            columns:
+              - column:
+                  name: id
+                  type: bigint
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: name
+                  type: varchar(50)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: body_part_code
+                  type: varchar(10)
+                  constraints:
+                    nullable: false
+                    foreignKeyName: fk_muscle_body_part
+                    references: body_parts(code)
+
+  - changeSet:
+      id: create-standard-exercises-table
+      author: ggpark
+      changes:
+        - createTable:
+            tableName: standard_exercises
+            columns:
+              - column:
+                  name: id
+                  type: bigint
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: name
+                  type: varchar(255)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: type
+                  type: varchar(40)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: body_part_code
+                  type: varchar(10)
+                  constraints:
+                    nullable: false
+                    foreignKeyName: fk_standard_exercise_body_part
+                    references: body_parts(code)
+              - column:
+                  name: description
+                  type: text
+
+  - changeSet:
+      id: create-standard-exercise-muscles-table
+      author: ggpark
+      changes:
+        - createTable:
+            tableName: standard_exercise_muscles
+            columns:
+              - column:
+                  name: id
+                  type: bigint
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: standard_exercise_id
+                  type: bigint
+                  constraints:
+                    nullable: false
+                    foreignKeyName: fk_standard_exercise_muscle_standard_exercise
+                    references: standard_exercises(id)
+                    deleteCascade: true
+              - column:
+                  name: muscle_id
+                  type: bigint
+                  constraints:
+                    nullable: false
+                    foreignKeyName: fk_standard_exercise_muscle_muscle
+                    references: muscles(id)
+                    deleteCascade: true
+              - column:
+                  name: role
+                  type: varchar(10)
+                  constraints:
+                    nullable: false

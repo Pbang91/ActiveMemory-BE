@@ -9,6 +9,8 @@ import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.web.cors.CorsConfiguration;
@@ -43,19 +45,20 @@ public class SecurityConfig {
         this.customAuthenticationEntryPoint = customAuthenticationEntryPoint;
         this.jwtAuthFilter = jwtAuthFilter;
     }
+
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         return http.cors(cors -> cors.configurationSource(
-                request -> {
-                    CorsConfiguration corsConfiguration = new CorsConfiguration();
+                        request -> {
+                            CorsConfiguration corsConfiguration = new CorsConfiguration();
 
-                    corsConfiguration.addAllowedOriginPattern("*");
-                    corsConfiguration.addAllowedHeader("*");
-                    corsConfiguration.addAllowedMethod("*");
-                    corsConfiguration.setAllowCredentials(false);
+                            corsConfiguration.addAllowedOriginPattern("*");
+                            corsConfiguration.addAllowedHeader("*");
+                            corsConfiguration.addAllowedMethod("*");
+                            corsConfiguration.setAllowCredentials(false);
 
-                    return corsConfiguration;
-                }))
+                            return corsConfiguration;
+                        }))
                 .csrf(AbstractHttpConfigurer::disable)
                 .formLogin(AbstractHttpConfigurer::disable)
                 .httpBasic(AbstractHttpConfigurer::disable)
@@ -88,5 +91,10 @@ public class SecurityConfig {
                 .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class)
                 .build();
 
+    }
+
+    @Bean
+    public PasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder();
     }
 }

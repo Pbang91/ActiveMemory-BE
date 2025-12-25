@@ -1,0 +1,104 @@
+databaseChangeLog:
+  - changeSet:
+      id: load-body-parts-csv
+      author: ggpark
+      changes:
+        - loadData:
+            tableName: body_parts
+            file: db/seed/reference/body_parts.csv
+            relativeToChangelogFile: false
+            separator: ","
+            quotchar: '"'
+            columns:
+              - column:
+                  header: code
+                  name: code
+                  type: java.lang.string
+              - column:
+                  header: name
+                  name: name
+                  type: java.lang.String
+
+  - changeSet:
+      id: load-muscles-csv
+      author: ggpark
+      changes:
+        - loadData:
+            tableName: muscles
+            file: db/seed/reference/muscles.csv
+            relativeToChangelogFile: false
+            columns:
+              - column:
+                  header: id
+                  name: id
+                  type: numeric
+              - column:
+                  header: body_part_code
+                  name: body_part_code
+                  type: java.lang.string
+              - column:
+                  header: name
+                  name: name
+                  type: java.lang.string
+  - changeSet:
+      id: load-muscles-csv
+      author: ggpark
+      changes:
+        - loadData:
+            tableName: standard_exercise
+            file: db/seed/reference/standard_exercise.csv
+            relativeToChangelogFile: false
+            columns:
+              - column:
+                  header: id
+                  name: id
+                  type: numeric
+              - column:
+                  header: body_part_code
+                  name: body_part_code
+                  type: java.lang.string
+              - column:
+                  header: name
+                  name: name
+                  type: java.lang.string
+              - column:
+                  header: type
+                  name: type
+                  type: java.lang.string
+              - column:
+                  header: description
+                  name: description
+                  type: java.lang.string
+
+  - changeSet:
+      id: load-standard-exercise-muscles-csv
+      author: ggpark
+      changes:
+        - loadData:
+            tableName: standard_exercise_muscles
+            file: db/seed/reference/standard_exercise_muscles.csv
+            relativeToChangelogFile: false
+            columns:
+              - column:
+                  header: standard_exercise_id
+                  name: standard_exercise_id
+                  type: numeric
+              - column:
+                  header: muscle_id
+                  name: muscle_id
+                  type: numeric
+              - column:
+                  header: role
+                  name: role
+                  type: java.lang.String
+  - changeSet:
+      id: reset-sequences-after-seed
+      author: ggpark
+      dbms: postgresql
+      changes:
+        - sql:
+            sql: SELECT setval('muscle_id_seq', (SELECT MAX(id) FROM muscles));
+        - sql:
+            sql: SELECT setval('standard_exercises_id_seq', (SELECT MAX(id) FROM standard_exercises));
+        - sql:
+            sql: SELECT setval('standard_exercise_muscles_id_seq', (SELECT MAX(id) FROM standard_exercise_muscles));

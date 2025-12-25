@@ -1,6 +1,6 @@
 package com.example.activememory.global.security;
 
-import com.example.activememory.global.share.enums.PrefixCode;
+import com.example.activememory.global.enums.PrefixCode;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Component;
@@ -10,7 +10,8 @@ import java.util.concurrent.TimeUnit;
 
 @Component
 public class RedisActiveDeviceRegistry implements ActiveDeviceRegistry {
-    @Value("${jwt.refresh.expiration}")  private Long REFRESH_TOKEN_EXPIRATION;
+    @Value("${jwt.refresh.expiration}")
+    private Long REFRESH_TOKEN_EXPIRATION;
     private final StringRedisTemplate redis;
 
     public RedisActiveDeviceRegistry(StringRedisTemplate stringRedisTemplate) {

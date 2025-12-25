@@ -1,0 +1,117 @@
+databaseChangeLog:
+  - changeSet:
+      id: create-my-gyms-table
+      author: ggpark
+      changes:
+        - createTable:
+            tableName: my_gyms
+            columns:
+              - column:
+                  name: id
+                  type: bigint
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: is_active
+                  type: boolean
+              - column:
+                  name: created_at
+                  type: timestamp
+                  defaultValueComputed: CURRENT_TIMESTAMP
+              - column:
+                  name: updated_at
+                  type: timestamp
+                  defaultValueComputed: CURRENT_TIMESTAMP
+              - column:
+                  name: deleted_at
+                  type: timestamp
+              - column:
+                  name: user_id
+                  type: bigint
+                  constraints:
+                    nullable: false
+              - column:
+                  name: gym_id
+                  type: bigint
+                  constraints:
+                    nullable: false
+
+  - changeSet:
+      id: create-custom-machines-table
+      author: ggpark
+      changes:
+        - createTable:
+            tableName: custom_machines
+            columns:
+              - column:
+                  name: id
+                  type: bigint
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: name
+                  type: varchar(255)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: memo
+                  type: text
+              - column:
+                  name: created_at
+                  type: timestamp
+                  defaultValueComputed: CURRENT_TIMESTAMP
+              - column:
+                  name: updated_at
+                  type: timestamp
+                  defaultValueComputed: CURRENT_TIMESTAMP
+              - column:
+                  name: deleted_at
+                  type: timestamp
+              - column:
+                  name: body_part_code
+                  type: varchar(10)
+              - column:
+                  name: standard_exercise_id
+                  type: bigint
+              - column:
+                  name: my_gym_id
+                  type: bigint
+                  constraints:
+                    nullable: false
+                    foreignKeyName: fk_custom_machine_my_gym
+                    references: my_gyms(id)
+
+  - changeSet:
+      id: create-custom-machine-muscles-table
+      author: ggpark
+      changes:
+        - createTable:
+            tableName: custom_machine_muscles
+            columns:
+              - column:
+                  name: id
+                  type: bigint
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: role
+                  type: varchar(10)
+              - column:
+                  name: custom_machine_id
+                  type: bigint
+                  constraints:
+                    nullable: false
+                    foreignKeyName: fk_custom_machine_muscle_custom_machine
+                    references: custom_machines(id)
+                    deleteCascade: true
+              - column:
+                  name: muscle_id
+                  type: bigint
+                  constraints:
+                    nullable: false

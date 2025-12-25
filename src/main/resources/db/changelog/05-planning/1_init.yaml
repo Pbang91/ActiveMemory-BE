@@ -1,0 +1,131 @@
+databaseChangeLog:
+  - changeSet:
+      id: create-routines-table
+      author: ggpark
+      changes:
+        - createTable:
+            tableName: routines
+            columns:
+              - column:
+                  name: id
+                  type: bigint
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: user_id
+                  type: bigint
+                  constraints:
+                    nullable: false
+              - column:
+                  name: name
+                  type: varchar(50)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: description
+                  type: text
+              - column:
+                  name: current_division_sequence
+                  type: int
+                  defaultValueNumeric: "1"
+                  constraints:
+                    nullable: false
+              - column:
+                  name: is_active
+                  type: boolean
+                  constraints:
+                    nullable: false
+              - column:
+                  name: created_at
+                  type: timestamp
+                  defaultValueComputed: CURRENT_TIMESTAMP
+              - column:
+                  name: updated_at
+                  type: timestamp
+                  defaultValueComputed: CURRENT_TIMESTAMP
+
+  - changeSet:
+      id: create-exercise-divisions-table
+      author: ggpark
+      changes:
+        - createTable:
+            tableName: exercise_divisions
+            columns:
+              - column:
+                  name: id
+                  type: bigint
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: name
+                  type: varchar(50)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: sequence
+                  type: int
+                  constraints:
+                    nullable: false
+              - column:
+                  name: routine_id
+                  type: bigint
+                  constraints:
+                    nullable: false
+                    foreignKeyName: fk_exercise_division_routine
+                    references: routines(id)
+                    deleteCascade: true
+
+  - changeSet:
+      id: create-exercise-division-steps-table
+      author: ggpark
+      changes:
+        - createTable:
+            tableName: exercise_division_steps
+            columns:
+              - column:
+                  name: id
+                  type: bigint
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: step_order
+                  type: int
+                  constraints:
+                    nullable: false
+              - column:
+                  name: target_sets
+                  type: int
+                  constraints:
+                    nullable: false
+              - column:
+                  name: target_reps
+                  type: int
+                  constraints:
+                    nullable: false
+              - column:
+                  name: target_weight
+                  type: decimal(5, 2)
+              - column:
+                  name: performable_type
+                  type: varchar(10)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: performable_id
+                  type: bigint
+                  constraints:
+                    nullable: false
+              - column:
+                  name: exercise_division_id
+                  type: bigint
+                  constraints:
+                    nullable: false
+                    foreignKeyName: fk_exercise_division_step_exercise_division
+                    references: exercise_divisions(id)
+                    deleteCascade: true

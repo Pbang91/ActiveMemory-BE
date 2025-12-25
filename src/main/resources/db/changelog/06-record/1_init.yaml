@@ -1,0 +1,154 @@
+databaseChangeLog:
+  - changeSet:
+      id: create-sessions-table
+      author: ggpark
+      changes:
+        - createTable:
+            tableName: sessions
+            columns:
+              - column:
+                  name: id
+                  type: bigint
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: start_time
+                  type: timestamp
+                  constraints:
+                    nullable: false
+              - column:
+                  name: end_time
+                  type: timestamp
+              - column:
+                  name: my_gym_id
+                  type: bigint
+                  constraints:
+                    nullable: false
+              - column:
+                  name: user_id
+                  type: bigint
+                  constraints:
+                    nullable: false
+              - column:
+                  name: routine_id
+                  type: bigint
+
+  - changeSet:
+      id: create-workout-logs-table
+      author: ggpark
+      changes:
+        - createTable:
+            tableName: workout_logs
+            columns:
+              - column:
+                  name: id
+                  type: bigint
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: snapshot_name
+                  type: varchar(255)
+              - column:
+                  name: snapshot_body_part_code
+                  type: varchar(10)
+              - column:
+                  name: memo
+                  type: text
+              - column:
+                  name: performable_type
+                  type: varchar(10)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: performable_id
+                  type: bigint
+                  constraints:
+                    nullable: false
+              - column:
+                  name: session_id
+                  type: bigint
+                  constraints:
+                    nullable: false
+                    foreignKeyName: fk_workout_log_session
+                    references: sessions(id)
+                    deleteCascade: true
+
+  - changeSet:
+      id: create-workout-set-logs-table
+      author: ggpark
+      changes:
+        - createTable:
+            tableName: workout_set_logs
+            columns:
+              - column:
+                  name: id
+                  type: bigint
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: set_num
+                  type: int
+                  constraints:
+                    nullable: false
+              - column:
+                  name: reps
+                  type: int
+                  constraints:
+                    nullable: false
+              - column:
+                  name: weight
+                  type: decimal(5, 2)
+              - column:
+                  name: is_completed
+                  type: boolean
+                  defaultValueBoolean: false
+                  constraints:
+                    nullable: false
+              - column:
+                  name: workout_log_id
+                  type: bigint
+                  constraints:
+                    nullable: false
+                    foreignKeyName: fk_workout_set_workout_log
+                    references: workout_logs(id)
+                    deleteCascade: true
+
+  - changeSet:
+      id: create-body-measurements-table
+      author: ggpark
+      changes:
+        - createTable:
+            tableName: body_measurements
+            columns:
+              - column:
+                  name: id
+                  type: bigint
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: weight
+                  type: decimal(5, 2)
+              - column:
+                  name: skeletal_muscle
+                  type: decimal(5, 2)
+              - column:
+                  name: body_fat
+                  type: decimal(5, 2)
+              - column:
+                  name: measured_date
+                  type: date
+                  constraints:
+                    nullable: false
+              - column:
+                  name: user_id
+                  type: bigint
+                  constraints:
+                    nullable: false
