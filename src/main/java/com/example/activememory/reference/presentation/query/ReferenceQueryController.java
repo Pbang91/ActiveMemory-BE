@@ -1,6 +1,8 @@
 package com.example.activememory.reference.presentation.query;
 
 import com.example.activememory.reference.application.query.ReferenceQueryService;
+import com.example.activememory.reference.application.query.model.BodyPartReadModel;
+import com.example.activememory.reference.application.query.model.StandardExerciseReadModel;
 import io.swagger.v3.oas.annotations.security.SecurityRequirements;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -21,12 +23,12 @@ public class ReferenceQueryController {
     }
 
     @GetMapping("/body-parts")
-    public List<?> getBodyPart() {
+    public List<BodyPartReadModel> getBodyPart() {
         return queryService.findBodyParts();
     }
 
     @GetMapping("/standard-exercises")
-    public List<?> getStandardExercises() {
+    public List<StandardExerciseReadModel> getStandardExercises() {
         return queryService.findStandardExercises();
     }
 }
