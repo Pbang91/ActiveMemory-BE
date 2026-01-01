@@ -41,12 +41,12 @@ databaseChangeLog:
                   name: name
                   type: java.lang.string
   - changeSet:
-      id: load-muscles-csv
+      id: load-standard-exercises-csv
       author: ggpark
       changes:
         - loadData:
-            tableName: standard_exercise
-            file: db/seed/reference/standard_exercise.csv
+            tableName: standard_exercises
+            file: db/seed/reference/standard_exercises.csv
             relativeToChangelogFile: false
             columns:
               - column:
@@ -97,7 +97,7 @@ databaseChangeLog:
       dbms: postgresql
       changes:
         - sql:
-            sql: SELECT setval('muscle_id_seq', (SELECT MAX(id) FROM muscles));
+            sql: SELECT setval('muscles_id_seq', (SELECT MAX(id) FROM muscles));
         - sql:
             sql: SELECT setval('standard_exercises_id_seq', (SELECT MAX(id) FROM standard_exercises));
         - sql:

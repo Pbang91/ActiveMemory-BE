@@ -1,0 +1,35 @@
+id,body_part_code,name,type,description
+1,CHEST,플랫 벤치프레스,BARBELL,가슴 전체
+2,CHEST,인클라인 벤치프레스,BARBELL,윗 가슴
+3,CHEST,플랫 덤벨 프레스,DUMBBELL,가슴 전체
+4,CHEST,인클라인 덤벨 프레스,DUMBBELL,윗가슴
+5,CHEST,덤벨 플라이,DUMBBELL,윗가슴
+6,CHEST,덤벨 풀오버,DUMBBELL,가슴 전체
+7,CHEST,푸쉬업,BODYWEIGHT,가슴 전체
+8,CHEST,딥스,BODYWEIGHT,아랫가슴
+9,BACK,벤트오버 바벨로우,BARBELL,등 전체
+10,BACK,펜들레이 로우,BARBELL,등 전체
+11,BACK,원 암 덤벨로우,DUMBBELL,
+12,BACK,인클라인 덤벨로우,DUMBBELL,
+13,BACK,풀업,BODYWEIGHT,등 전체
+14,BACK,렛풀다운,MACHINE,
+15,BACK,롱풀다운,MACHINE,
+16,LEG,데드리프트,BARBELL,후면사슬
+17,LEG,백 스쿼트,BARBELL,하체 전체
+18,LEG,프론트 스쿼트,BARBELL,
+19,LEG,덤벨 런지,DUMBBELL,허벅지
+20,LEG,카프레이즈,BODYWEIGHT,종아리
+21,LEG,레그 익스텐션,MACHINE,대퇴사두
+22,LEG,레그 컬,MACHINE,햄스트링
+23,SHOULDER,밀리터리 프레스,BARBELL,어깨 전체
+24,SHOULDER,덤벨 숄더 프레스,DUMBBELL,
+25,SHOULDER,사이드 레터럴 레이즈,DUMBBELL,어깨 측면
+26,ARM,바벨 컬,BARBELL,팔 이두
+27,ARM,덤벨 컬,DUMBBELL,팔 이두
+28,ARM,해머 컬,DUMBBELL,팔 이두
+29,ARM,클로즈 그립 벤치프레스,BARBELL,팔 삼두
+30,ARM,라잉 트라이셉스 익스텐션(바벨),BARBELL,팔 삼두
+31,ARM,오버헤드 익스텐션(덤벨),DUMBBELL,팔 삼두
+32,ABS,행잉 레그 레이즈,BODYWEIGHT,복근 하부
+33,ABS,크런치,BODYWEIGHT,복근 상부
+34,ABS,플랭크,BODYWEIGHT,코어

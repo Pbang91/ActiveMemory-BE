@@ -1,0 +1,12 @@
+id,body_part_code,name
+1,CHEST,대흉근
+2,BACK,광배근
+3,BACK,승모근
+4,BACK,기립근
+5,LEG,대퇴사두
+6,LEG,햄스트링
+7,LEG,둔근
+8,LEG,비복근
+9,SHOULDER,삼각근
+10,ARM,상완이두근
+11,ARM,상완삼두근

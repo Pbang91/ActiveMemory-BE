@@ -76,14 +76,15 @@ public class SecurityConfig {
                                         "/api/v1/users/oauth/kakao",
                                         "/api/v1/users/oauth/apple",
                                         "/api/v1/users/oauth/apple/callback",
-                                        "api/v1/users/auth/",
+                                        "/api/v1/users/auth/",
                                         "/api/v1/users/auth/token/"
                                 )
                                 .permitAll()
                                 .requestMatchers(
                                         HttpMethod.GET,
                                         "/api/v1/users/oauth/kakao/callback",
-                                        "/api/v1/feeds/**"
+                                        "/api/v1/feeds/**",
+                                        "/api/v1/references/**"
                                 )
                                 .permitAll()
                                 .anyRequest().authenticated()
