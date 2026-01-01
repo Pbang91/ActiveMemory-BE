@@ -2,6 +2,7 @@ package com.example.activememory.account.domain.vo;
 
 import static com.querydsl.core.types.PathMetadataFactory.*;
 
+import com.example.activememory.account.user.domain.vo.Profile;
 import com.querydsl.core.types.dsl.*;
 
 import com.querydsl.core.types.PathMetadata;

@@ -1,7 +1,7 @@
-package com.example.activememory.account.domain.entity;
+package com.example.activememory.account.user.domain.entity;
 
-import com.example.activememory.account.domain.vo.Profile;
-import com.example.activememory.account.domain.vo.UserId;
+import com.example.activememory.account.user.domain.vo.Profile;
+import com.example.activememory.account.user.domain.vo.UserId;
 import com.example.activememory.global.entity.BaseTimeEntity;
 import jakarta.persistence.*;
 import lombok.AccessLevel;

@@ -1,4 +1,4 @@
-package com.example.activememory.account.domain.vo;
+package com.example.activememory.account.user.domain.vo;
 
 import com.example.activememory.global.exception.CustomException;
 import com.example.activememory.global.exception.ExceptionCode;
@@ -15,7 +15,8 @@ public class Profile {
     @Column(name = "bio")
     private String bio;
 
-    protected Profile() {}
+    protected Profile() {
+    }
 
     private Profile(String nickname, String bio) {
         if (nickname == null || nickname.isEmpty()) {

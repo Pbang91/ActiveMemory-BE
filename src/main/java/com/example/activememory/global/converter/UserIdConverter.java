@@ -1,6 +1,6 @@
 package com.example.activememory.global.converter;
 
-import com.example.activememory.account.domain.vo.UserId;
+import com.example.activememory.account.user.domain.vo.UserId;
 import jakarta.persistence.AttributeConverter;
 import jakarta.persistence.Converter;
 

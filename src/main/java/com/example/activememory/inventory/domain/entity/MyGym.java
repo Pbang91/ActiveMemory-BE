@@ -1,6 +1,6 @@
 package com.example.activememory.inventory.domain.entity;
 
-import com.example.activememory.account.domain.vo.UserId;
+import com.example.activememory.account.user.domain.vo.UserId;
 import com.example.activememory.global.entity.BaseTimeEntity;
 import com.example.activememory.inventory.domain.vo.MyGymId;
 import com.example.activememory.shared.domain.vo.GymId;
