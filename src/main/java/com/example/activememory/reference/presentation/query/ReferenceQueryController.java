@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
-@SecurityRequirements
 @Tag(name = "Reference Query API")
 @RestController
 @RequestMapping("/api/v1/references")

@@ -16,7 +16,7 @@ import java.util.List;
 import java.util.UUID;
 
 @Service
-public class AuthService {
+public class AuthCommandService {
     private final List<AuthStrategy> strategies;
     private final AuthRegistry authRegistry;
     private final JwtService jwtService;
@@ -24,7 +24,7 @@ public class AuthService {
     @Value("${jwt.refresh.expiration}")
     private Long refreshTokenExpiration;
 
-    public AuthService(List<AuthStrategy> strategies, AuthRegistry authRegistry, JwtService jwtService) {
+    public AuthCommandService(List<AuthStrategy> strategies, AuthRegistry authRegistry, JwtService jwtService) {
         this.strategies = strategies;
         this.authRegistry = authRegistry;
         this.jwtService = jwtService;

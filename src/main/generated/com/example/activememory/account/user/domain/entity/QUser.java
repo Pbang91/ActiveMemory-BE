@@ -37,6 +37,8 @@ public class QUser extends EntityPathBase<User> {
 
     public final com.example.activememory.account.user.domain.vo.QProfile profile;
 
+    public final EnumPath<com.example.activememory.global.enums.AuthType> type = createEnum("type", com.example.activememory.global.enums.AuthType.class);
+
     //inherited
     public final DateTimePath<java.time.LocalDateTime> updatedAt = _super.updatedAt;
 
