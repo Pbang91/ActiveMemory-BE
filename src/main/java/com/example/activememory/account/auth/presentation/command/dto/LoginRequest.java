@@ -1,7 +1,7 @@
 package com.example.activememory.account.auth.presentation.command.dto;
 
 import com.example.activememory.account.auth.application.command.dto.LoginCommand;
-import com.example.activememory.account.auth.domain.enums.AuthType;
+import com.example.activememory.global.enums.AuthType;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotNull;
 

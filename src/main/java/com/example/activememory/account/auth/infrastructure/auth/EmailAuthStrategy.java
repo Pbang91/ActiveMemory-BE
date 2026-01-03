@@ -4,7 +4,7 @@ import com.example.activememory.account.auth.application.command.dto.LoginComman
 import com.example.activememory.account.auth.application.port.AuthStrategy;
 import com.example.activememory.account.auth.application.port.UserPort;
 import com.example.activememory.account.auth.domain.entity.AuthTargetUser;
-import com.example.activememory.account.auth.domain.enums.AuthType;
+import com.example.activememory.global.enums.AuthType;
 import com.example.activememory.global.exception.BusinessException;
 import com.example.activememory.global.exception.ExceptionCode;
 import lombok.RequiredArgsConstructor;
@@ -28,7 +28,6 @@ public class EmailAuthStrategy implements AuthStrategy {
         if (!StringUtils.hasText(command.email()) || !StringUtils.hasText(command.password())) {
             throw new BusinessException(ExceptionCode.INVALID_PARAMETER, "이메일과 비밀번호는 필수입니다");
         }
-
 
         AuthTargetUser user = userPort.loadUserByEmail(command.email())
                 .orElseThrow(() -> new BusinessException(ExceptionCode.INVALID_USER, "가입되지 않은 이메일"));
