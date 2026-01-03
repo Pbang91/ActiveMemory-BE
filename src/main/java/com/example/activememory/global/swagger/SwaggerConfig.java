@@ -1,8 +1,8 @@
 package com.example.activememory.global.swagger;
 
 import com.example.activememory.global.exception.ExceptionCode;
-import com.example.activememory.global.exception.annotation.ExceptionData;
-import com.example.activememory.global.exception.annotation.ExceptionResponse;
+import com.example.activememory.global.swagger.annotation.ExceptionData;
+import com.example.activememory.global.swagger.annotation.ExceptionResponse;
 import io.swagger.v3.oas.models.Components;
 import io.swagger.v3.oas.models.OpenAPI;
 import io.swagger.v3.oas.models.examples.Example;

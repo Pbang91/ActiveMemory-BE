@@ -1,8 +1,7 @@
-package com.example.activememory.account.domain.entity;
+package com.example.activememory.account.user.domain.entity;
 
 import static com.querydsl.core.types.PathMetadataFactory.*;
 
-import com.example.activememory.account.user.domain.entity.User;
 import com.querydsl.core.types.dsl.*;
 
 import com.querydsl.core.types.PathMetadata;
@@ -17,7 +16,7 @@ import com.querydsl.core.types.dsl.PathInits;
 @Generated("com.querydsl.codegen.DefaultEntitySerializer")
 public class QUser extends EntityPathBase<User> {
 
-    private static final long serialVersionUID = 1497245219L;
+    private static final long serialVersionUID = 283224344L;
 
     private static final PathInits INITS = PathInits.DIRECT2;
 
@@ -36,7 +35,7 @@ public class QUser extends EntityPathBase<User> {
 
     public final StringPath password = createString("password");
 
-    public final com.example.activememory.account.domain.vo.QProfile profile;
+    public final com.example.activememory.account.user.domain.vo.QProfile profile;
 
     //inherited
     public final DateTimePath<java.time.LocalDateTime> updatedAt = _super.updatedAt;
@@ -59,7 +58,7 @@ public class QUser extends EntityPathBase<User> {
 
     public QUser(Class<? extends User> type, PathMetadata metadata, PathInits inits) {
         super(type, metadata, inits);
-        this.profile = inits.isInitialized("profile") ? new com.example.activememory.account.domain.vo.QProfile(forProperty("profile")) : null;
+        this.profile = inits.isInitialized("profile") ? new com.example.activememory.account.user.domain.vo.QProfile(forProperty("profile")) : null;
     }
 
 }

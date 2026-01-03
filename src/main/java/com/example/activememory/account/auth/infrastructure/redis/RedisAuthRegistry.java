@@ -1,15 +1,9 @@
-package com.example.activememory.account.auth.infrastructure;
+package com.example.activememory.account.auth.infrastructure.redis;
 
 import com.example.activememory.account.auth.domain.AuthRegistry;
-import com.example.activememory.account.auth.domain.AuthSession;
-import com.example.activememory.account.auth.domain.AuthSessionRepository;
-import com.example.activememory.global.enums.PrefixCode;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.data.redis.core.StringRedisTemplate;
+import com.example.activememory.account.auth.domain.entity.AuthSession;
+import com.example.activememory.account.auth.domain.repository.AuthSessionRepository;
 import org.springframework.stereotype.Component;
-
-import java.util.UUID;
-import java.util.concurrent.TimeUnit;
 
 @Component
 public class RedisAuthRegistry implements AuthRegistry {

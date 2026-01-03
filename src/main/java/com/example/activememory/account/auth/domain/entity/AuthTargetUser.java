@@ -1,4 +1,4 @@
-package com.example.activememory.account.auth.domain;
+package com.example.activememory.account.auth.domain.entity;
 
 public record AuthTargetUser(
         Long userId,

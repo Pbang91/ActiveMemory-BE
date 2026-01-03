@@ -150,8 +150,6 @@ public class JwtService {
         claims.put("deviceId", deviceId);
         claims.put("typ", "refresh");
 
-        authRegistry.setActiveDeviceId(userId, deviceId);
-
         return Jwts.builder()
                 .subject(userId.toString())
                 .claims(claims)

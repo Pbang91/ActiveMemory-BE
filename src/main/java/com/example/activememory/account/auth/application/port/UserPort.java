@@ -1,6 +1,6 @@
 package com.example.activememory.account.auth.application.port;
 
-import com.example.activememory.account.auth.domain.AuthTargetUser;
+import com.example.activememory.account.auth.domain.entity.AuthTargetUser;
 
 import java.util.Optional;
 

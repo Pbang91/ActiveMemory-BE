@@ -1,4 +1,4 @@
-package com.example.activememory.global.exception.annotation;
+package com.example.activememory.global.swagger.annotation;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;

@@ -1,52 +1,57 @@
 package com.example.activememory.account.auth.application.command;
 
-import com.example.activememory.account.auth.application.port.UserPort;
+import com.example.activememory.account.auth.application.command.dto.LoginCommand;
+import com.example.activememory.account.auth.application.command.dto.TokenResponse;
+import com.example.activememory.account.auth.application.port.AuthStrategy;
 import com.example.activememory.account.auth.domain.AuthRegistry;
-import com.example.activememory.account.auth.domain.AuthSession;
-import com.example.activememory.account.auth.domain.AuthTargetUser;
+import com.example.activememory.account.auth.domain.entity.AuthSession;
+import com.example.activememory.account.auth.domain.entity.AuthTargetUser;
+import com.example.activememory.global.exception.BusinessException;
+import com.example.activememory.global.exception.ExceptionCode;
 import com.example.activememory.global.jwt.service.JwtService;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.UUID;
 
 @Service
 public class AuthService {
+    private final List<AuthStrategy> strategies;
     private final AuthRegistry authRegistry;
-    private final UserPort userPort;
-    private final PasswordEncoder passwordEncoder;
     private final JwtService jwtService;
 
     @Value("${jwt.refresh.expiration}")
     private Long refreshTokenExpiration;
 
-    public AuthService(AuthRegistry authRegistry, UserPort userPort, PasswordEncoder passwordEncoder, JwtService jwtService) {
+    public AuthService(List<AuthStrategy> strategies, AuthRegistry authRegistry, JwtService jwtService) {
+        this.strategies = strategies;
         this.authRegistry = authRegistry;
-        this.userPort = userPort;
-        this.passwordEncoder = passwordEncoder;
         this.jwtService = jwtService;
     }
 
-    public void login(LoginCommand command) {
+    public TokenResponse login(LoginCommand command) {
         /*
-        1. 사용자 검증
-        2. UserId 기반 DeviceId 생성
-        3. 토큰 발급 - newDeviceId
-        4. Redis 저장 - 덮어쓰기
+        1. 전략 찾기 및 인증 위임(OCP)
+        2. 세션 생성 및 토큰 발급
          */
-        AuthTargetUser user = userPort.loadUserByEmail(command.email()).orElseThrow(() -> new RuntimeException("이런 이런"));
+        AuthStrategy strategy = strategies
+                .stream()
+                .filter(s -> s.supports(command.type()))
+                .findFirst()
+                .orElseThrow(() -> new BusinessException(ExceptionCode.INVALID_AUTH_TYPE));
 
-        if (!passwordEncoder.matches(command.password(), user.password())) {
-            throw new IllegalArgumentException("이런 이런");
-        }
+        AuthTargetUser user = strategy.authenticate(command);
 
         String newDeviceId = UUID.randomUUID().toString();
+
         String accessToken = jwtService.generateAccessToken(user.userId(), newDeviceId, null);
         String refreshToken = jwtService.generateRefreshToken(user.userId(), newDeviceId, null);
 
         AuthSession authSession = new AuthSession(user.userId(), newDeviceId, refreshToken, refreshTokenExpiration);
 
         authRegistry.save(authSession);
+
+        return new TokenResponse(accessToken, refreshToken);
     }
 }

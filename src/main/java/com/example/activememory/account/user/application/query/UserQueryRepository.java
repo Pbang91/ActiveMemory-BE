@@ -1,8 +1,7 @@
 package com.example.activememory.account.user.application.query;
 
-import com.example.activememory.account.domain.entity.QUser;
 import com.example.activememory.account.user.application.query.model.AuthUserReadModel;
-import com.example.activememory.account.user.domain.entity.User;
+import com.example.activememory.account.user.domain.entity.QUser;
 import com.querydsl.core.types.Projections;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import lombok.RequiredArgsConstructor;

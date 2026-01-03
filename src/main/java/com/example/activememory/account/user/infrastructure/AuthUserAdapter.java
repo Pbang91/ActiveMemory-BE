@@ -1,7 +1,7 @@
 package com.example.activememory.account.user.infrastructure;
 
 import com.example.activememory.account.auth.application.port.UserPort;
-import com.example.activememory.account.auth.domain.AuthTargetUser;
+import com.example.activememory.account.auth.domain.entity.AuthTargetUser;
 import com.example.activememory.account.user.application.query.UserQueryRepository;
 import org.springframework.stereotype.Component;
 

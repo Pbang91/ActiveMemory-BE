@@ -1,8 +1,8 @@
 package com.example.activememory.global.exception.handler;
 
-import com.example.activememory.global.api.ApiResponseUtil;
+import com.example.activememory.global.api.Api;
 import com.example.activememory.global.api.ExceptionResDto;
-import com.example.activememory.global.exception.CustomException;
+import com.example.activememory.global.exception.BusinessException;
 import com.example.activememory.global.exception.ExceptionCode;
 import com.example.activememory.global.logging.CustomLogger;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -29,19 +29,19 @@ public class ControllerExceptionHandler extends ResponseEntityExceptionHandler {
     private final ObjectMapper objectMapper;
 
     public ControllerExceptionHandler(ObjectMapper objectMapper) {
-    this.objectMapper = objectMapper;
-}
+        this.objectMapper = objectMapper;
+    }
 
-    @ExceptionHandler(CustomException.class)
-    public ResponseEntity<ExceptionResDto> handleCustomException(CustomException e) {
-        return ApiResponseUtil.reject(e.getExceptionCode(), e.getDetails());
+    @ExceptionHandler(BusinessException.class)
+    public ResponseEntity<ExceptionResDto> handleCustomException(BusinessException e) {
+        return Api.reject(e.getExceptionCode(), e.getDetails());
     }
 
     @ExceptionHandler(Exception.class)
     public final ResponseEntity<ExceptionResDto> handleAllUnhandledException(Exception ex, WebRequest request) {
         CustomLogger.logError(objectMapper, logger, request, ex, ex.getMessage());
 
-        return ApiResponseUtil.reject(ExceptionCode.INTERNAL_SERVER_ERROR, ex.getMessage());
+        return Api.reject(ExceptionCode.INTERNAL_SERVER_ERROR, ex.getMessage());
     }
 
     @Override
@@ -59,7 +59,7 @@ public class ControllerExceptionHandler extends ResponseEntityExceptionHandler {
 
         CustomLogger.logError(objectMapper, logger, request, ex, details);
 
-        return ApiResponseUtil.reject(ExceptionCode.INVALID_PARAMETER, details, true);
+        return Api.reject(ExceptionCode.INVALID_PARAMETER, details, true);
     }
 
     @Override
@@ -72,7 +72,7 @@ public class ControllerExceptionHandler extends ResponseEntityExceptionHandler {
         String details = "요청 형식이 잘못되었습니다. 올바른 JSON 형식을 확인해주세요.";
         CustomLogger.logError(objectMapper, logger, request, ex, details);
 
-        return ApiResponseUtil.reject(ExceptionCode.INVALID_PARAMETER, details, true);
+        return Api.reject(ExceptionCode.INVALID_PARAMETER, details, true);
     }
 
     @Override
@@ -85,6 +85,6 @@ public class ControllerExceptionHandler extends ResponseEntityExceptionHandler {
         String details = "필수 파라미터가 누락되었습니다. " + ex.getParameterName() + " 파라미터를 확인해주세요.";
         CustomLogger.logError(objectMapper, logger, request, ex, details);
 
-        return ApiResponseUtil.reject(ExceptionCode.INVALID_PARAMETER, details, true);
+        return Api.reject(ExceptionCode.INVALID_PARAMETER, details, true);
     }
 }

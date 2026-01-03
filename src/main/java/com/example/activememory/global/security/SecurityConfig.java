@@ -25,12 +25,15 @@ public class SecurityConfig {
     private static final String[] SWAGGER_WHITELIST = {
             "/swagger-ui.html",
             "/swagger-ui/**",
+
             // springdoc 기본
             "/v3/api-docs",
             "/v3/api-docs/**",
+
             // yml에서 springdoc.api-docs.path=/api-docs 로 바꾼 경우 대비
-            "/api-docs",
+            "/api-docs.*",
             "/api-docs/**",
+
             // 추가 리소스
             "/swagger-resources/**",
             "/webjars/**"

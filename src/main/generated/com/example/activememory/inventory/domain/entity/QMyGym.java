@@ -2,7 +2,6 @@ package com.example.activememory.inventory.domain.entity;
 
 import static com.querydsl.core.types.PathMetadataFactory.*;
 
-import com.example.activememory.account.user.domain.vo.UserId;
 import com.querydsl.core.types.dsl.*;
 
 import com.querydsl.core.types.PathMetadata;
@@ -36,7 +35,7 @@ public class QMyGym extends EntityPathBase<MyGym> {
     //inherited
     public final DateTimePath<java.time.LocalDateTime> updatedAt = _super.updatedAt;
 
-    public final SimplePath<UserId> userId = createSimple("userId", UserId.class);
+    public final SimplePath<com.example.activememory.account.user.domain.vo.UserId> userId = createSimple("userId", com.example.activememory.account.user.domain.vo.UserId.class);
 
     public QMyGym(String variable) {
         super(MyGym.class, forVariable(variable));

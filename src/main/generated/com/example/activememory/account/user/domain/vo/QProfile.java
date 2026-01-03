@@ -1,8 +1,7 @@
-package com.example.activememory.account.domain.vo;
+package com.example.activememory.account.user.domain.vo;
 
 import static com.querydsl.core.types.PathMetadataFactory.*;
 
-import com.example.activememory.account.user.domain.vo.Profile;
 import com.querydsl.core.types.dsl.*;
 
 import com.querydsl.core.types.PathMetadata;
@@ -16,7 +15,7 @@ import com.querydsl.core.types.Path;
 @Generated("com.querydsl.codegen.DefaultEmbeddableSerializer")
 public class QProfile extends BeanPath<Profile> {
 
-    private static final long serialVersionUID = -1380456793L;
+    private static final long serialVersionUID = 1489875218L;
 
     public static final QProfile profile = new QProfile("profile");
 

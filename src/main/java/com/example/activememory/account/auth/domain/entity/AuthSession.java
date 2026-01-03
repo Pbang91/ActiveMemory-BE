@@ -1,7 +1,7 @@
-package com.example.activememory.account.auth.domain;
+package com.example.activememory.account.auth.domain.entity;
 
-import jakarta.persistence.Id;
 import lombok.Getter;
+import org.springframework.data.annotation.Id;
 import org.springframework.data.redis.core.RedisHash;
 import org.springframework.data.redis.core.TimeToLive;
 
@@ -11,7 +11,7 @@ import java.util.concurrent.TimeUnit;
 @RedisHash("auth:session")
 public class AuthSession {
     @Id
-    private Long userId;
+    private final Long userId;
 
     private String deviceId;
 

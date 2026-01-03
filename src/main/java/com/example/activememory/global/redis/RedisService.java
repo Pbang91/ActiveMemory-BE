@@ -1,6 +1,6 @@
 package com.example.activememory.global.redis;
 
-import com.example.activememory.global.exception.CustomException;
+import com.example.activememory.global.exception.BusinessException;
 import com.example.activememory.global.exception.ExceptionCode;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Component;
@@ -52,7 +52,7 @@ public class RedisService {
         try {
             return convert(value, clazz);
         } catch (ClassCastException e) {
-            throw new CustomException(ExceptionCode.INTERNAL_SERVER_ERROR, "레디스 캐스팅 오류." + clazz.getSimpleName() + " 사유: " + e.getMessage());
+            throw new BusinessException(ExceptionCode.INTERNAL_SERVER_ERROR, "레디스 캐스팅 오류." + clazz.getSimpleName() + " 사유: " + e.getMessage());
         }
     }
 

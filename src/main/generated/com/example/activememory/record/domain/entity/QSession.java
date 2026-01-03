@@ -2,7 +2,6 @@ package com.example.activememory.record.domain.entity;
 
 import static com.querydsl.core.types.PathMetadataFactory.*;
 
-import com.example.activememory.account.user.domain.vo.UserId;
 import com.querydsl.core.types.dsl.*;
 
 import com.querydsl.core.types.PathMetadata;
@@ -31,7 +30,7 @@ public class QSession extends EntityPathBase<Session> {
 
     public final DateTimePath<java.time.LocalDateTime> startTime = createDateTime("startTime", java.time.LocalDateTime.class);
 
-    public final SimplePath<UserId> userId = createSimple("userId", UserId.class);
+    public final SimplePath<com.example.activememory.account.user.domain.vo.UserId> userId = createSimple("userId", com.example.activememory.account.user.domain.vo.UserId.class);
 
     public final ListPath<WorkoutLog, QWorkoutLog> workoutLogs = this.<WorkoutLog, QWorkoutLog>createList("workoutLogs", WorkoutLog.class, QWorkoutLog.class, PathInits.DIRECT2);
 
