@@ -1,6 +1,6 @@
 package com.example.activememory.account.auth.application.command.dto;
 
-import com.example.activememory.account.auth.domain.enums.AuthType;
+import com.example.activememory.global.enums.AuthType;
 
 public record LoginCommand(
         AuthType type,

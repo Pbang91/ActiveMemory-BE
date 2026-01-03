@@ -1,0 +1,13 @@
+databaseChangeLog:
+  - changeSet:
+      id: add-user-auth-type
+      author: ggpark
+      changes:
+        - addColumn:
+            tableName: users
+            columns:
+              - column:
+                  name: type
+                  type: varchar(20)
+                  constraints:
+                    nullable: false

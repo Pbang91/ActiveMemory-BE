@@ -4,7 +4,7 @@ import com.example.activememory.account.auth.application.command.dto.LoginComman
 import com.example.activememory.account.auth.application.port.AuthStrategy;
 import com.example.activememory.account.auth.application.port.UserPort;
 import com.example.activememory.account.auth.domain.entity.AuthTargetUser;
-import com.example.activememory.account.auth.domain.enums.AuthType;
+import com.example.activememory.global.enums.AuthType;
 import com.example.activememory.global.exception.BusinessException;
 import com.example.activememory.global.exception.ExceptionCode;
 import lombok.RequiredArgsConstructor;
