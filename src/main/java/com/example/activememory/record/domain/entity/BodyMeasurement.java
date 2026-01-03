@@ -1,6 +1,6 @@
 package com.example.activememory.record.domain.entity;
 
-import com.example.activememory.account.domain.vo.UserId;
+import com.example.activememory.account.user.domain.vo.UserId;
 import jakarta.persistence.*;
 
 import java.math.BigDecimal;

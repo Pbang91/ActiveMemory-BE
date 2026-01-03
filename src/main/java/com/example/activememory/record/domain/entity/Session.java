@@ -1,6 +1,6 @@
 package com.example.activememory.record.domain.entity;
 
-import com.example.activememory.account.domain.vo.UserId;
+import com.example.activememory.account.user.domain.vo.UserId;
 import com.example.activememory.inventory.domain.vo.MyGymId;
 import com.example.activememory.planning.domain.vo.RoutineId;
 import com.example.activememory.record.domain.vo.SessionId;

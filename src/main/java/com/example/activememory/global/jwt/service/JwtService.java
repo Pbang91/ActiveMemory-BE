@@ -1,6 +1,7 @@
 package com.example.activememory.global.jwt.service;
 
-import com.example.activememory.global.security.ActiveDeviceRegistry;
+import com.example.activememory.account.auth.domain.AuthRegistry;
+import com.example.activememory.account.user.domain.vo.UserId;
 import com.example.activememory.global.security.CustomUserDetail;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
@@ -18,13 +19,16 @@ import java.util.*;
 
 @Service
 public class JwtService {
-    @Value("${jwt.secret}") private String SECRET;
-    @Value("${jwt.access.expiration}") private Long ACCESS_TOKEN_EXPIRATION;
-    @Value("${jwt.refresh.expiration}")  private Long REFRESH_TOKEN_EXPIRATION;
-    private final ActiveDeviceRegistry activeDeviceRegistry;
+    @Value("${jwt.secret}")
+    private String SECRET;
+    @Value("${jwt.access.expiration}")
+    private Long ACCESS_TOKEN_EXPIRATION;
+    @Value("${jwt.refresh.expiration}")
+    private Long REFRESH_TOKEN_EXPIRATION;
+    private final AuthRegistry authRegistry;
 
-    public JwtService(ActiveDeviceRegistry activeDeviceRegistry) {
-        this.activeDeviceRegistry = activeDeviceRegistry;
+    public JwtService(AuthRegistry authRegistry) {
+        this.authRegistry = authRegistry;
     }
 
     /**
@@ -33,7 +37,7 @@ public class JwtService {
      * @return key
      */
     private SecretKey key() {
-        byte [] keyByte = SECRET.getBytes(StandardCharsets.UTF_8);
+        byte[] keyByte = SECRET.getBytes(StandardCharsets.UTF_8);
 
 
         if (keyByte.length < 32) {
@@ -70,7 +74,7 @@ public class JwtService {
      * @return 검증값
      */
     public boolean isExpired(String token) {
-        Date exp =  extractAllClaims(token).getExpiration();
+        Date exp = extractAllClaims(token).getExpiration();
         return exp == null || exp.before(new Date());
     }
 
@@ -99,12 +103,12 @@ public class JwtService {
     /**
      * AccessToken 생성
      *
-     * @param userId 현재 요청하는 userId
-     * @param deviceId 현재 요청하는 user의 deviceId
+     * @param userId      현재 요청하는 userId
+     * @param deviceId    현재 요청하는 user의 deviceId
      * @param extraClaims 그 외 claims
      * @return accessToken
      */
-    public String generateAccessToken(UUID userId, String deviceId, Map<String, Object> extraClaims) {
+    public String generateAccessToken(Long userId, String deviceId, Map<String, Object> extraClaims) {
         Instant now = Instant.now();
 
         Map<String, Object> claims = new HashMap<>();
@@ -129,12 +133,12 @@ public class JwtService {
     /**
      * RefreshToken 생성
      *
-     * @param userId 현재 요청하는 userId
-     * @param deviceId 현재 요청하는 user의 deviceId
+     * @param userId      현재 요청하는 userId
+     * @param deviceId    현재 요청하는 user의 deviceId
      * @param extraClaims 그 외 claims
      * @return refreshToken
      */
-    public String generateRefreshToken(UUID userId, String deviceId, Map<String, Object> extraClaims) {
+    public String generateRefreshToken(Long userId, String deviceId, Map<String, Object> extraClaims) {
         Instant now = Instant.now();
 
         Map<String, Object> claims = new HashMap<>();
@@ -145,8 +149,6 @@ public class JwtService {
 
         claims.put("deviceId", deviceId);
         claims.put("typ", "refresh");
-
-        activeDeviceRegistry.setActiveDeviceId(userId, deviceId);
 
         return Jwts.builder()
                 .subject(userId.toString())
@@ -165,11 +167,11 @@ public class JwtService {
             }
 
             Claims claims = extractAllClaims(accessToken);
-            UUID userId = UUID.fromString(claims.getSubject());
+            Long userId = Long.valueOf(claims.getSubject());
             String deviceId = claims.get("deviceId", String.class);
 
             // 활성 디바이스 확인(계정당 1개)
-            String activeDeviceId = activeDeviceRegistry.getActiveDeviceId(userId);
+            String activeDeviceId = authRegistry.getActiveDeviceId(userId);
 
             if (activeDeviceId == null || !Objects.equals(activeDeviceId, deviceId)) {
                 return null;

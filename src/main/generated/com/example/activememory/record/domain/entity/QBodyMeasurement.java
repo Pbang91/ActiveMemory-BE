@@ -27,7 +27,7 @@ public class QBodyMeasurement extends EntityPathBase<BodyMeasurement> {
 
     public final NumberPath<java.math.BigDecimal> skeletalMuscle = createNumber("skeletalMuscle", java.math.BigDecimal.class);
 
-    public final SimplePath<com.example.activememory.account.domain.vo.UserId> userId = createSimple("userId", com.example.activememory.account.domain.vo.UserId.class);
+    public final SimplePath<com.example.activememory.account.user.domain.vo.UserId> userId = createSimple("userId", com.example.activememory.account.user.domain.vo.UserId.class);
 
     public final NumberPath<java.math.BigDecimal> weight = createNumber("weight", java.math.BigDecimal.class);
 

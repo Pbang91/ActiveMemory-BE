@@ -2,10 +2,8 @@ package com.example.activememory.reference.application.query;
 
 import com.example.activememory.reference.application.query.model.BodyPartReadModel;
 import com.example.activememory.reference.application.query.model.StandardExerciseReadModel;
-import com.example.activememory.reference.domain.entity.BodyPart;
 import com.example.activememory.reference.domain.entity.QBodyPart;
 import com.example.activememory.reference.domain.entity.QStandardExercise;
-import com.example.activememory.reference.domain.entity.StandardExercise;
 import com.querydsl.core.types.Projections;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import lombok.RequiredArgsConstructor;

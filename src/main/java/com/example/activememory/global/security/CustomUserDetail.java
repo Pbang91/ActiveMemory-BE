@@ -7,7 +7,7 @@ import java.util.Collection;
 import java.util.UUID;
 
 public record CustomUserDetail(
-        UUID userId,
+        Long userId,
         String password,
         String deviceId,
         Collection<? extends GrantedAuthority> authorities
