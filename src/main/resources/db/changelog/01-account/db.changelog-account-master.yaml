@@ -1,3 +1,5 @@
 databaseChangeLog:
   - include:
       file: db/changelog/01-account/1_init.yaml
+  - include:
+      file: db/changelog/01-account/2_add_user_type.yaml

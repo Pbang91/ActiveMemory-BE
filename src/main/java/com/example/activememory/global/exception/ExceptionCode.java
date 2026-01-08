@@ -9,6 +9,7 @@ public enum ExceptionCode {
     INVALID_TOKEN("0002", "유효하지 않은 토큰입니다", HttpStatus.UNAUTHORIZED),
     INVALID_USER("0003", "유효하지 않은 사용자입니다", HttpStatus.BAD_REQUEST),
     INVALID_AUTH_TYPE("0004", "지원하지 않는 인증수단입니다", HttpStatus.BAD_REQUEST),
+    ALREADY_EXISTS_USER("0005", "이미 가입된 사용자입니다", HttpStatus.CONFLICT),
     INVALID_PARAMETER("9998", "잘못된 요청입니다", HttpStatus.BAD_REQUEST),
     INTERNAL_SERVER_ERROR("9999", "Internal Server Error", HttpStatus.INTERNAL_SERVER_ERROR);
 

@@ -18,12 +18,14 @@ public class UserQueryRepository {
     public Optional<AuthUserReadModel> findUserByEmail(String email) {
         return Optional.ofNullable(
                 query.select(
-                        Projections.constructor(
-                                AuthUserReadModel.class,
-                                user.id,
-                                user.email,
-                                user.password
-                        )).where(user.email.eq(email)).fetchOne()
+                                Projections.constructor(
+                                        AuthUserReadModel.class,
+                                        user.id,
+                                        user.email,
+                                        user.password
+                                ))
+                        .from(user)
+                        .where(user.email.eq(email)).fetchOne()
         );
     }
 }

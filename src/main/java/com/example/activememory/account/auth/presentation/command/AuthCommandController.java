@@ -1,6 +1,6 @@
 package com.example.activememory.account.auth.presentation.command;
 
-import com.example.activememory.account.auth.application.command.AuthService;
+import com.example.activememory.account.auth.application.command.AuthCommandService;
 import com.example.activememory.account.auth.application.command.dto.TokenResponse;
 import com.example.activememory.account.auth.presentation.command.dto.AuthTokenResponse;
 import com.example.activememory.account.auth.presentation.command.dto.LoginRequest;
@@ -10,6 +10,7 @@ import com.example.activememory.global.exception.ExceptionCode;
 import com.example.activememory.global.swagger.annotation.ExceptionData;
 import com.example.activememory.global.swagger.annotation.ExceptionResponse;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.security.SecurityRequirements;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
@@ -20,14 +21,15 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("/api/v1/auth")
 public class AuthCommandController {
-    private final AuthService authService;
+    private final AuthCommandService authCommandService;
 
-    public AuthCommandController(AuthService authService) {
-        this.authService = authService;
+    public AuthCommandController(AuthCommandService authCommandService) {
+        this.authCommandService = authCommandService;
     }
 
     @PostMapping("/login")
     @ResponseStatus(HttpStatus.OK)
+    @SecurityRequirements
     @Operation(
             summary = "로그인 API", description = "최종 수정일: 2026.01.03\n\nEmail, OAuth를 모두 지원합니다"
     )
@@ -37,7 +39,7 @@ public class AuthCommandController {
             @ExceptionData(code = ExceptionCode.INVALID_USER)
     })
     public ResponseEntity<SuccessResDto<AuthTokenResponse>> login(@RequestBody @Valid LoginRequest request) {
-        TokenResponse result = authService.login(request.toCommand());
+        TokenResponse result = authCommandService.login(request.toCommand());
 
         return Api.success(
                 new AuthTokenResponse(result.accessToken(), result.refreshToken()),
