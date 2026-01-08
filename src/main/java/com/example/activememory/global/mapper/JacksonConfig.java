@@ -1,5 +1,7 @@
 package com.example.activememory.global.mapper;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import org.openapitools.jackson.nullable.JsonNullableModule;
 import org.springframework.boot.autoconfigure.jackson.Jackson2ObjectMapperBuilderCustomizer;
 import org.springframework.context.annotation.Bean;
@@ -16,7 +18,10 @@ import java.util.List;
 public class JacksonConfig implements WebMvcConfigurer {
     @Bean
     public Jackson2ObjectMapperBuilderCustomizer jsonNullableCustomizer() {
-        return builder -> builder.modules(new JsonNullableModule());
+        return builder -> {
+            builder.modules(new JsonNullableModule());
+            builder.modules(new JavaTimeModule());
+        };
     }
 
     @Override
