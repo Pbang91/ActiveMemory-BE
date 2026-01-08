@@ -27,6 +27,10 @@ public record CustomUserDetail(
         return userId.toString();
     }
 
+    public Long getUserId() {
+        return userId;
+    }
+
     @Override
     public boolean isAccountNonExpired() {
         return true;

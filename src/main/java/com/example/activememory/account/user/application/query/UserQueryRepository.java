@@ -1,6 +1,7 @@
 package com.example.activememory.account.user.application.query;
 
 import com.example.activememory.account.user.application.query.model.AuthUserReadModel;
+import com.example.activememory.account.user.application.query.model.UserMeReadModel;
 import com.example.activememory.account.user.domain.entity.QUser;
 import com.querydsl.core.types.Projections;
 import com.querydsl.jpa.impl.JPAQueryFactory;
@@ -26,6 +27,23 @@ public class UserQueryRepository {
                                 ))
                         .from(user)
                         .where(user.email.eq(email)).fetchOne()
+        );
+    }
+
+    public Optional<UserMeReadModel> findMe(Long userId) {
+        return Optional.ofNullable(
+                query.select(
+                                Projections.constructor(
+                                        UserMeReadModel.class,
+                                        user.id,
+                                        user.email,
+                                        user.profile.nickname,
+                                        user.profile.bio,
+                                        user.type,
+                                        user.createdAt
+                                ))
+                        .from(user)
+                        .where(user.id.eq(userId)).fetchOne()
         );
     }
 }

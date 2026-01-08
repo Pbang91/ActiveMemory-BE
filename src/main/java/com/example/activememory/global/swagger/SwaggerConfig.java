@@ -34,9 +34,9 @@ public class SwaggerConfig {
                                 securitySchemeName,
                                 new SecurityScheme()
                                         .name("Authorization")
-                                        .type(SecurityScheme.Type.APIKEY)
+                                        .type(SecurityScheme.Type.HTTP)
                                         .scheme("bearer")
-                                        .name("JWT")
+                                        .bearerFormat("JWT")
                         )
                 );
     }
