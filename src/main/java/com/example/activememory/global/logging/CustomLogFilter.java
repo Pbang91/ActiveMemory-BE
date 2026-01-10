@@ -41,6 +41,12 @@ public class CustomLogFilter extends OncePerRequestFilter {
             return;
         }
 
+        // CORS용은 넘어가자
+        if ("OPTIONS".equals(request.getMethod())) {
+            filterChain.doFilter(request, response);
+            return;
+        }
+
         CustomRequestWrapper wrappedRequest = new CustomRequestWrapper(request);
         CustomResponseWrapper wrappedResponse = new CustomResponseWrapper(response);
 

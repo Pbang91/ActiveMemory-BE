@@ -14,12 +14,22 @@ public class RedisAuthRegistry implements AuthRegistry {
     }
 
     @Override
-    public String getActiveDeviceId(Long userId) {
+    public String getDeviceIdById(Long userId) {
         return repository.findById(userId).map(AuthSession::getDeviceId).orElse(null);
+    }
+
+    @Override
+    public AuthSession findById(Long userId) {
+        return repository.findById(userId).orElse(null);
     }
 
     @Override
     public void save(AuthSession authSession) {
         repository.save(authSession);
+    }
+
+    @Override
+    public void deleteById(Long userId) {
+        repository.deleteById(userId);
     }
 }

@@ -77,6 +77,7 @@ public class SecurityConfig {
                                 .requestMatchers(
                                         HttpMethod.POST,
                                         "/api/v1/auth/login",
+                                        "/api/v1/auth/re-issue",
                                         "/api/v1/auth/oauth/apple/callback",
                                         "/api/v1/auth/oauth/google/callback",
                                         "/api/v1/users"

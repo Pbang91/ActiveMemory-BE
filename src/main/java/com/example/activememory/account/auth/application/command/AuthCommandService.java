@@ -54,4 +54,38 @@ public class AuthCommandService {
 
         return new TokenResponse(accessToken, refreshToken);
     }
+
+    public void logout(Long userId) {
+        authRegistry.deleteById(userId);
+    }
+
+    public TokenResponse reIssue(String refreshToken) {
+        if (!jwtService.validateToken(refreshToken, "refresh")) {
+            throw new BusinessException(ExceptionCode.INVALID_TOKEN);
+        }
+
+        Long userId = jwtService.getUseId(refreshToken);
+
+        AuthSession session = authRegistry.findById(userId);
+
+        if (session == null) {
+            throw new BusinessException(ExceptionCode.INVALID_TOKEN);
+        }
+
+        if (!session.getRefreshToken().equals(refreshToken)) {
+            // Session에 있는거랑 다르면 안되는 거임(탈취?) -> 강제로 로그아웃
+            authRegistry.deleteById(userId);
+
+            throw new BusinessException(ExceptionCode.INVALID_TOKEN);
+        }
+
+        String newAccessToken = jwtService.generateAccessToken(userId, session.getDeviceId(), null);
+        String newRefreshToken = jwtService.generateRefreshToken(userId, session.getDeviceId(), null);
+
+        session.rotateToken(newRefreshToken, refreshTokenExpiration);
+
+        authRegistry.save(session);
+
+        return new TokenResponse(newAccessToken, newRefreshToken);
+    }
 }

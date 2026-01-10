@@ -1,11 +1,10 @@
 package com.example.activememory.global.jwt.service;
 
 import com.example.activememory.account.auth.domain.AuthRegistry;
-import com.example.activememory.account.user.domain.vo.UserId;
 import com.example.activememory.global.security.CustomUserDetail;
-import io.jsonwebtoken.Claims;
-import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.*;
 import io.jsonwebtoken.security.Keys;
+import io.jsonwebtoken.security.SecurityException;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -53,7 +52,7 @@ public class JwtService {
      * @param token access or refresh token
      * @return token에 들어있는 claims
      */
-    public Claims extractAllClaims(String token) {
+    private Claims extractAllClaims(String token) {
         return Jwts.parser().verifyWith(key()).build().parseSignedClaims(token).getPayload();
     }
 
@@ -63,41 +62,29 @@ public class JwtService {
      * @param token access or refresh token
      * @return userId
      */
-    public String extractSubject(String token) {
-        return extractAllClaims(token).getSubject();
+    public Long getUseId(String token) {
+        return Long.valueOf(extractAllClaims(token).getSubject());
     }
 
-    /**
-     * JWT 유효 시간 검증
-     *
-     * @param token access or refresh token
-     * @return 검증값
-     */
-    public boolean isExpired(String token) {
-        Date exp = extractAllClaims(token).getExpiration();
-        return exp == null || exp.before(new Date());
-    }
 
-    /**
-     * AccessToken 맞는지 확인
-     *
-     * @param token 전달된 토큰
-     * @return 검증값
-     */
-    public boolean isAccessToken(String token) {
-        Object typ = extractAllClaims(token).get("typ");
-        return "access".equals(typ);
-    }
+    public boolean validateToken(String token, String type) {
+        try {
+            Claims claims = extractAllClaims(token);
 
-    /**
-     * RefreshToken 맞는지 확인
-     *
-     * @param token 전달된 토큰
-     * @return 검증값
-     */
-    public boolean isRefreshToken(String token) {
-        Object typ = extractAllClaims(token).get("typ");
-        return "refresh".equals(typ);
+            return claims.get("typ").equals(type);
+        } catch (SecurityException | MalformedJwtException e) {
+            // 잘못된 JWT 서명
+        } catch (ExpiredJwtException e) {
+            // 만료된 토큰
+        } catch (UnsupportedJwtException e) {
+            // 지원되지 않는 토큰
+        } catch (IllegalArgumentException e) {
+            // 걍 이상한 토큰
+        } catch (Exception e) {
+            // 뭔지 모를 에러
+        }
+
+        return false;
     }
 
     /**
@@ -162,7 +149,7 @@ public class JwtService {
 
     public Authentication buildAuthenticationFromAccessToken(String accessToken) {
         try {
-            if (isExpired(accessToken) || !isAccessToken(accessToken)) {
+            if (!validateToken(accessToken, "access")) {
                 return null;
             }
 
@@ -171,9 +158,13 @@ public class JwtService {
             String deviceId = claims.get("deviceId", String.class);
 
             // 활성 디바이스 확인(계정당 1개)
-            String activeDeviceId = authRegistry.getActiveDeviceId(userId);
+            String activeDeviceId = authRegistry.getDeviceIdById(userId);
 
-            if (activeDeviceId == null || !Objects.equals(activeDeviceId, deviceId)) {
+            if (activeDeviceId == null) {
+                return null;
+            }
+
+            if (!Objects.equals(activeDeviceId, deviceId)) {
                 return null;
             }
 
