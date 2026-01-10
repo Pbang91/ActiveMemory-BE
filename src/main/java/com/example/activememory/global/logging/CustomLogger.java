@@ -35,19 +35,21 @@ public class CustomLogger {
             Map<String, Object> requestQueryJson = null;
 
             if (request.getCachedBodyAsString() == null && request.getQueryString() != null) {
-                requestQueryJson = objectMapper.readValue(request.getQueryString(), new TypeReference<>() {});
+                requestQueryJson = objectMapper.readValue(request.getQueryString(), new TypeReference<>() {
+                });
             } else {
                 boolean isJsonBody = request.getContentType() != null
                         && request.getContentType().contains(MediaType.APPLICATION_JSON_VALUE);
 
                 if (!isJsonBody) {
-                    requestBodyJson =  new HashMap<>() {
+                    requestBodyJson = new HashMap<>() {
                         {
                             put("size", request.getContentLength());
                         }
                     };
                 } else {
-                    requestBodyJson = objectMapper.readValue(request.getCachedBodyAsString(), new TypeReference<>() {});
+                    requestBodyJson = objectMapper.readValue(request.getCachedBodyAsString(), new TypeReference<>() {
+                    });
                 }
             }
 
@@ -72,8 +74,16 @@ public class CustomLogger {
     public static void logResponse(ObjectMapper objectMapper, Logger infoLogger, Logger warnLogger, CustomResponseWrapper response) {
         try {
             String responseBody = new String(response.getCachedBody(), StandardCharsets.UTF_8);
-            Map<String, Object> responseJson = objectMapper.readValue(responseBody, new TypeReference<>() {
-            });
+            Map<String, Object> responseJson = null;
+
+            if (responseBody != null && !responseBody.isBlank()) {
+                try {
+                    responseJson = objectMapper.readValue(responseBody, new TypeReference<>() {
+                    });
+                } catch (Exception e) {
+
+                }
+            }
 
             ResponseLog responseLog = new ResponseLog(
                     "RESPONSE",
