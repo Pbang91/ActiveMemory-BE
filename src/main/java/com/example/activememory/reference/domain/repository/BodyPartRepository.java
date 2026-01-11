@@ -1,4 +1,4 @@
-package com.example.activememory.reference.domain;
+package com.example.activememory.reference.domain.repository;
 
 import com.example.activememory.reference.domain.entity.BodyPart;
 import org.springframework.data.jpa.repository.JpaRepository;

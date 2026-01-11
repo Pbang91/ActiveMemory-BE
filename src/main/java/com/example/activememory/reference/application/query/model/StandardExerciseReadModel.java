@@ -1,21 +1,36 @@
 package com.example.activememory.reference.application.query.model;
 
-import com.example.activememory.reference.domain.vo.BodyPartCode;
+import io.swagger.v3.oas.annotations.media.ArraySchema;
+import io.swagger.v3.oas.annotations.media.Schema;
+import jakarta.validation.constraints.NotNull;
+
+import java.util.List;
 
 public record StandardExerciseReadModel(
+        @NotNull
+        @Schema(description = "standardExercise id", example = "20")
         Long id,
-        String bodyPartCode,
+
+        @NotNull
+        @Schema(description = "운동명", example = "렛풀다운")
         String name,
-        String type,
-        String description
+
+        @NotNull
+        @Schema(description = "운동 설명", example = "열심히 해야 해요")
+        String description,
+
+        @NotNull
+        @Schema(description = "운동 대분류")
+        BodyPartReadModel bodyPart,
+
+        @NotNull
+        @Schema(description = "운동 방법")
+        ExerciseTypeReadModel exerciseType,
+
+        @ArraySchema(
+                schema = @Schema(description = "운동 방법에 타게팅되는 소분류 근유")
+        )
+        List<MuscleReadModel> muscles
+
 ) {
-    public StandardExerciseReadModel(Long id, BodyPartCode bodyPartCode, String name, String type, String description) {
-        this(
-                id,
-                bodyPartCode != null ? bodyPartCode.value() : null, // VO -> String 변환
-                name,
-                type,
-                description
-        );
-    }
 }

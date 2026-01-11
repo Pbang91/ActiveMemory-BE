@@ -5,6 +5,7 @@ import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import lombok.Getter;
 
 @Entity
 @Table(name = "body_parts")
@@ -13,6 +14,7 @@ public class BodyPart {
     @Column(nullable = false, length = 10)
     private String code;
 
+    @Getter
     @Column(nullable = false, length = 40)
     private String name;
 

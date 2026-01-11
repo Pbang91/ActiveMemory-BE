@@ -3,6 +3,7 @@ package com.example.activememory.reference.domain.entity;
 import com.example.activememory.reference.domain.vo.BodyPartCode;
 import com.example.activememory.reference.domain.vo.MuscleId;
 import jakarta.persistence.*;
+import lombok.Getter;
 
 @Entity
 @Table(name = "muscles")
@@ -14,6 +15,7 @@ public class Muscle {
     @Column(name = "body_part_code", nullable = false, length = 10)
     private BodyPartCode bodyPartCode;
 
+    @Getter
     @Column(name = "name", nullable = false, length = 50)
     private String name;
 

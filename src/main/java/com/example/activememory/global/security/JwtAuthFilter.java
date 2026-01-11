@@ -1,8 +1,6 @@
-package com.example.activememory.global.jwt.filter;
+package com.example.activememory.global.security;
 
-import com.example.activememory.global.jwt.service.JwtService;
 import com.example.activememory.global.logging.context.LogContext;
-import com.example.activememory.global.security.CustomUserDetail;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;

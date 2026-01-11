@@ -3,12 +3,12 @@ package com.example.activememory.account.auth.application.command;
 import com.example.activememory.account.auth.application.command.dto.LoginCommand;
 import com.example.activememory.account.auth.application.command.dto.TokenResponse;
 import com.example.activememory.account.auth.application.port.AuthStrategy;
-import com.example.activememory.account.auth.domain.AuthRegistry;
+import com.example.activememory.account.auth.domain.repository.AuthRegistry;
 import com.example.activememory.account.auth.domain.entity.AuthSession;
 import com.example.activememory.account.auth.domain.entity.AuthTargetUser;
 import com.example.activememory.global.exception.BusinessException;
 import com.example.activememory.global.exception.ExceptionCode;
-import com.example.activememory.global.jwt.service.JwtService;
+import com.example.activememory.global.security.JwtService;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
