@@ -2,7 +2,6 @@ package com.example.activememory.global.security;
 
 import com.example.activememory.global.exception.handler.CustomAccessDeniedHandler;
 import com.example.activememory.global.exception.handler.CustomAuthenticationEntryPoint;
-import com.example.activememory.global.jwt.filter.JwtAuthFilter;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;

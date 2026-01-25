@@ -30,7 +30,7 @@ public class QStandardExercise extends EntityPathBase<StandardExercise> {
 
     public final StringPath name = createString("name");
 
-    public final StringPath type = createString("type");
+    public final EnumPath<com.example.activememory.global.enums.ExerciseType> type = createEnum("type", com.example.activememory.global.enums.ExerciseType.class);
 
     public QStandardExercise(String variable) {
         super(StandardExercise.class, forVariable(variable));

@@ -31,7 +31,7 @@ public class UserQueryController {
     @GetMapping("/me")
     @ResponseStatus(HttpStatus.OK)
     @Operation(
-            summary = "본인 정보를 조회하는 API", description = "최종 수정일; 2026.01.08"
+            summary = "본인 정보를 조회하는 API", description = "최종 수정일: 2026.01.08"
     )
     @ExceptionResponse(
             value = {

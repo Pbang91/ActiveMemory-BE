@@ -1,7 +1,6 @@
-package com.example.activememory.global.jwt.service;
+package com.example.activememory.global.security;
 
-import com.example.activememory.account.auth.domain.AuthRegistry;
-import com.example.activememory.global.security.CustomUserDetail;
+import com.example.activememory.account.auth.domain.repository.AuthRegistry;
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.security.Keys;
 import io.jsonwebtoken.security.SecurityException;

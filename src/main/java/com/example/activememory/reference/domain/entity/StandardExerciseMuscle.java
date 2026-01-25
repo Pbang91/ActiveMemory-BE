@@ -3,6 +3,7 @@ package com.example.activememory.reference.domain.entity;
 import com.example.activememory.reference.domain.enums.MuscleRole;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 @Entity
@@ -17,10 +18,12 @@ public class StandardExerciseMuscle {
     @JoinColumn(name = "standard_exercise_id", nullable = false)
     private StandardExercise standardExercise;
 
+    @Getter
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "muscle_id", nullable = false)
     private Muscle muscle;
 
+    @Getter
     @Enumerated(EnumType.STRING)
     @Column(nullable = false, length = 10)
     private MuscleRole role;

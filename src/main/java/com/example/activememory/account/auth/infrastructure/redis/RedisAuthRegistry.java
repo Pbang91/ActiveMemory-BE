@@ -1,6 +1,6 @@
 package com.example.activememory.account.auth.infrastructure.redis;
 
-import com.example.activememory.account.auth.domain.AuthRegistry;
+import com.example.activememory.account.auth.domain.repository.AuthRegistry;
 import com.example.activememory.account.auth.domain.entity.AuthSession;
 import com.example.activememory.account.auth.domain.repository.AuthSessionRepository;
 import org.springframework.stereotype.Component;
