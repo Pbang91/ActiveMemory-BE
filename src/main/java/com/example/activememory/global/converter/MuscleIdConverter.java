@@ -1,6 +1,6 @@
 package com.example.activememory.global.converter;
 
-import com.example.activememory.reference.domain.vo.MuscleId;
+import com.example.activememory.reference.domain.exercise.vo.MuscleId;
 import jakarta.persistence.AttributeConverter;
 import jakarta.persistence.Converter;
 

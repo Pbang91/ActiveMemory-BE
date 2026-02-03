@@ -1,0 +1,24 @@
+databaseChangeLog:
+  - changeSet:
+      id: add-column-gyms
+      author: ggpark
+      changes:
+        - addColumn:
+            tableName: gyms
+            columns:
+              - column:
+                  name: provider_id
+                  type: varchar(30)
+                  constraints:
+                    unique: true
+                    nullable: true
+              - column:
+                  name: latitude
+                  type: varchar(50)
+                  constraints:
+                    nullable: true
+              - column:
+                  name: longitude
+                  type: varchar(50)
+                  constraints:
+                    nullable: true

@@ -1,3 +1,0 @@
-databaseChangeLog:
-  - include:
-      file: db/changelog/04-inventory/1_init.yaml

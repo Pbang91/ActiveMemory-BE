@@ -26,9 +26,9 @@ public class QCustomMachineMuscle extends EntityPathBase<CustomMachineMuscle> {
 
     public final NumberPath<Long> id = createNumber("id", Long.class);
 
-    public final SimplePath<com.example.activememory.reference.domain.vo.MuscleId> muscleId = createSimple("muscleId", com.example.activememory.reference.domain.vo.MuscleId.class);
+    public final SimplePath<com.example.activememory.reference.domain.exercise.vo.MuscleId> muscleId = createSimple("muscleId", com.example.activememory.reference.domain.exercise.vo.MuscleId.class);
 
-    public final EnumPath<com.example.activememory.reference.domain.enums.MuscleRole> role = createEnum("role", com.example.activememory.reference.domain.enums.MuscleRole.class);
+    public final EnumPath<com.example.activememory.reference.domain.exercise.enums.MuscleRole> role = createEnum("role", com.example.activememory.reference.domain.exercise.enums.MuscleRole.class);
 
     public QCustomMachineMuscle(String variable) {
         this(CustomMachineMuscle.class, forVariable(variable), INITS);

@@ -24,7 +24,7 @@ public class QCustomMachine extends EntityPathBase<CustomMachine> {
 
     public final com.example.activememory.global.entity.QBaseTimeEntity _super = new com.example.activememory.global.entity.QBaseTimeEntity(this);
 
-    public final SimplePath<com.example.activememory.reference.domain.vo.BodyPartCode> bodyPartCode = createSimple("bodyPartCode", com.example.activememory.reference.domain.vo.BodyPartCode.class);
+    public final SimplePath<com.example.activememory.reference.domain.exercise.vo.BodyPartCode> bodyPartCode = createSimple("bodyPartCode", com.example.activememory.reference.domain.exercise.vo.BodyPartCode.class);
 
     //inherited
     public final DateTimePath<java.time.LocalDateTime> createdAt = _super.createdAt;
@@ -39,7 +39,7 @@ public class QCustomMachine extends EntityPathBase<CustomMachine> {
 
     public final StringPath name = createString("name");
 
-    public final SimplePath<com.example.activememory.reference.domain.vo.StandardExerciseId> standardExerciseId = createSimple("standardExerciseId", com.example.activememory.reference.domain.vo.StandardExerciseId.class);
+    public final SimplePath<com.example.activememory.reference.domain.exercise.vo.StandardExerciseId> standardExerciseId = createSimple("standardExerciseId", com.example.activememory.reference.domain.exercise.vo.StandardExerciseId.class);
 
     //inherited
     public final DateTimePath<java.time.LocalDateTime> updatedAt = _super.updatedAt;

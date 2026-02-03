@@ -1,11 +1,10 @@
 package com.example.activememory.reference.application.query.model;
 
-import com.example.activememory.reference.domain.enums.MuscleRole;
+import com.example.activememory.reference.domain.exercise.enums.MuscleRole;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotNull;
 
 public record MuscleReadModel(
-
         @NotNull
         @Schema(description = "muscle id", example = "20")
         Long id,

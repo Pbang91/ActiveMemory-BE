@@ -1,6 +1,6 @@
 package com.example.activememory.global.converter;
 
-import com.example.activememory.reference.domain.vo.BodyPartCode;
+import com.example.activememory.reference.domain.exercise.vo.BodyPartCode;
 import jakarta.persistence.AttributeConverter;
 import jakarta.persistence.Converter;
 

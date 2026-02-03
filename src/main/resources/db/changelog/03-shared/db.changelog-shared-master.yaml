@@ -1,3 +1,0 @@
-databaseChangeLog:
-  - include:
-      file: db/changelog/03-shared/1_init.yaml

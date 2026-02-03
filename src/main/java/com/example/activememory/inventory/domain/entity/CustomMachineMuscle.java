@@ -1,7 +1,7 @@
 package com.example.activememory.inventory.domain.entity;
 
-import com.example.activememory.reference.domain.enums.MuscleRole;
-import com.example.activememory.reference.domain.vo.MuscleId;
+import com.example.activememory.reference.domain.exercise.enums.MuscleRole;
+import com.example.activememory.reference.domain.exercise.vo.MuscleId;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
