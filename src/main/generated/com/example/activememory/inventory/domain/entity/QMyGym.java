@@ -26,7 +26,7 @@ public class QMyGym extends EntityPathBase<MyGym> {
 
     public final DateTimePath<java.time.LocalDateTime> deletedAt = createDateTime("deletedAt", java.time.LocalDateTime.class);
 
-    public final SimplePath<com.example.activememory.shared.domain.vo.GymId> gymId = createSimple("gymId", com.example.activememory.shared.domain.vo.GymId.class);
+    public final SimplePath<com.example.activememory.reference.domain.gym.vo.GymId> gymId = createSimple("gymId", com.example.activememory.reference.domain.gym.vo.GymId.class);
 
     public final NumberPath<Long> id = createNumber("id", Long.class);
 

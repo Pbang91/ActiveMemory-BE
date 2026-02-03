@@ -1,3 +1,0 @@
-databaseChangeLog:
-  - include:
-      file: db/changelog/06-record/1_init.yaml
