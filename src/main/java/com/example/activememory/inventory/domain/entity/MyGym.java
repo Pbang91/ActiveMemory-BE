@@ -27,6 +27,19 @@ public class MyGym extends BaseTimeEntity {
     @Column(name = "deleted_at")
     private LocalDateTime deletedAt;
 
+    protected MyGym() {
+    }
+
+    private MyGym(UserId userId, GymId gymId) {
+        this.userId = userId;
+        this.gymId = gymId;
+        this.isActive = true;
+    }
+
+    public static MyGym create(UserId userId, GymId gymId) {
+        return new MyGym(userId, gymId);
+    }
+
     public MyGymId getMyGymId() {
         return MyGymId.of(id);
     }
