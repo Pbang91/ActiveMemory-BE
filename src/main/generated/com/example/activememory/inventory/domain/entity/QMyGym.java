@@ -7,6 +7,7 @@ import com.querydsl.core.types.dsl.*;
 import com.querydsl.core.types.PathMetadata;
 import javax.annotation.processing.Generated;
 import com.querydsl.core.types.Path;
+import com.querydsl.core.types.dsl.PathInits;
 
 
 /**
@@ -31,6 +32,8 @@ public class QMyGym extends EntityPathBase<MyGym> {
     public final NumberPath<Long> id = createNumber("id", Long.class);
 
     public final BooleanPath isActive = createBoolean("isActive");
+
+    public final ListPath<CustomMachine, QCustomMachine> machines = this.<CustomMachine, QCustomMachine>createList("machines", CustomMachine.class, QCustomMachine.class, PathInits.DIRECT2);
 
     //inherited
     public final DateTimePath<java.time.LocalDateTime> updatedAt = _super.updatedAt;

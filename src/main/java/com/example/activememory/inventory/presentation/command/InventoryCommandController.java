@@ -7,6 +7,8 @@ import com.example.activememory.global.security.CustomUserDetail;
 import com.example.activememory.global.swagger.annotation.ExceptionData;
 import com.example.activememory.global.swagger.annotation.ExceptionResponse;
 import com.example.activememory.inventory.application.command.service.InventoryCommandService;
+import com.example.activememory.inventory.presentation.command.dto.RegisterMyGymMachineRequest;
+import com.example.activememory.inventory.presentation.command.dto.RegisterMyGymMachineResponse;
 import com.example.activememory.inventory.presentation.command.dto.RegisterMyGymRequest;
 import com.example.activememory.inventory.presentation.command.dto.RegisterMyGymResponse;
 import io.swagger.v3.oas.annotations.Operation;
@@ -29,16 +31,29 @@ public class InventoryCommandController {
 
     @PostMapping("/gym")
     @ResponseStatus(HttpStatus.CREATED)
-    @Operation(summary = "내 체육관을 등록하는 API", description = "최종 수정일: 2026.02.16")
+    @Operation(summary = "내 체육관을 등록하는 API", description = "최종 수정일: 2026.03.02")
     @ExceptionResponse(value = {@ExceptionData(code = ExceptionCode.ALREADY_EXIST_MY_GYM)})
     public ResponseEntity<SuccessResDto<RegisterMyGymResponse>> registerMyGym(
             @AuthenticationPrincipal CustomUserDetail userDetail,
             @RequestBody @Valid RegisterMyGymRequest request
     ) {
         Long userId = userDetail.userId();
-
-        Long myGymId = service.registerMyGym(userId, request.toCommand());
+        Long myGymId = service.registerMyGym(request.toCommand(userId));
 
         return Api.success(new RegisterMyGymResponse(myGymId), HttpStatus.CREATED);
+    }
+
+    @PostMapping("/gym/machine")
+    @ResponseStatus(HttpStatus.CREATED)
+    @Operation(summary = "체육관의 기구를 등록하는 API", description = "최종 수정일: 2026.03.02")
+    @ExceptionResponse(value = {@ExceptionData(code = ExceptionCode.INVALID_MY_GYM)})
+    public ResponseEntity<SuccessResDto<RegisterMyGymMachineResponse>> registerMyGymMachine(
+            @AuthenticationPrincipal CustomUserDetail userDetail,
+            @RequestBody @Valid RegisterMyGymMachineRequest request
+    ) {
+        Long userId = userDetail.userId();
+        Long machineId = service.registerMyGymMachine(request.toCommand(userId));
+
+        return Api.success(new RegisterMyGymMachineResponse(machineId), HttpStatus.CREATED);
     }
 }

@@ -7,6 +7,7 @@ import com.example.activememory.reference.domain.exercise.vo.BodyPartCode;
 import com.example.activememory.reference.domain.exercise.vo.MuscleId;
 import com.example.activememory.reference.domain.exercise.vo.StandardExerciseId;
 import jakarta.persistence.*;
+import lombok.Getter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,6 +23,7 @@ public class CustomMachine extends BaseTimeEntity {
     @JoinColumn(name = "my_gym_id", nullable = false)
     private MyGym myGym;
 
+    @Getter
     @Column(name = "name", nullable = false)
     private String name;
 
@@ -37,8 +39,23 @@ public class CustomMachine extends BaseTimeEntity {
     @OneToMany(mappedBy = "customMachine", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
     private List<CustomMachineMuscle> muscles = new ArrayList<>();
 
+    protected CustomMachine() {
+    }
+
+    private CustomMachine(MyGym myGym, String name, StandardExerciseId standardExerciseId, BodyPartCode bodyPartCode, String memo) {
+        this.myGym = myGym;
+        this.name = name;
+        this.standardExerciseId = standardExerciseId;
+        this.bodyPartCode = bodyPartCode;
+        this.memo = memo;
+    }
+
     public CustomMachineId getCustomMachineId() {
         return CustomMachineId.of(id);
+    }
+
+    static CustomMachine create(MyGym myGym, String name, StandardExerciseId standardExerciseId, BodyPartCode bodyPartCode, String memo) {
+        return new CustomMachine(myGym, name, standardExerciseId, bodyPartCode, memo);
     }
 
     public void addMuscle(MuscleId muscleId, MuscleRole role) {

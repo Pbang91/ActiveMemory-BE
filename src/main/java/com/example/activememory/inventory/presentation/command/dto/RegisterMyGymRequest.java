@@ -1,5 +1,6 @@
 package com.example.activememory.inventory.presentation.command.dto;
 
+import com.example.activememory.account.user.domain.vo.UserId;
 import com.example.activememory.inventory.application.command.dto.RegisterMyGymCommand;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotBlank;
@@ -31,7 +32,7 @@ public record RegisterMyGymRequest(
         @Schema(description = "체육관 위도", example = "90.1234566")
         String y
 ) {
-    public RegisterMyGymCommand toCommand() {
-        return new RegisterMyGymCommand(providerId, name, roadAddress, address, phone, x, y);
+    public RegisterMyGymCommand toCommand(Long userId) {
+        return new RegisterMyGymCommand(UserId.of(userId), providerId, name, roadAddress, address, phone, x, y);
     }
 }

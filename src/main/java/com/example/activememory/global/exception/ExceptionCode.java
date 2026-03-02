@@ -11,6 +11,8 @@ public enum ExceptionCode {
     INVALID_AUTH_TYPE("0004", "지원하지 않는 인증수단입니다", HttpStatus.BAD_REQUEST),
     ALREADY_EXISTS_USER("0005", "이미 가입된 사용자입니다", HttpStatus.CONFLICT),
     ALREADY_EXIST_MY_GYM("0006", "이미 등록된 체육관입니디", HttpStatus.CONFLICT),
+    INVALID_MY_GYM("0007", "유효하지 않은 내 체육관입니다", HttpStatus.BAD_REQUEST),
+    ALREADY_EXIST_CUSTOM_MACHINE("0008", "이미 등록된 기구입니다", HttpStatus.CONFLICT),
     INVALID_PARAMETER("9998", "잘못된 요청입니다", HttpStatus.BAD_REQUEST),
     INTERNAL_SERVER_ERROR("9999", "Internal Server Error", HttpStatus.INTERNAL_SERVER_ERROR);
 

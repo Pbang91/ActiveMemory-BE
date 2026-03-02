@@ -1,5 +1,6 @@
 package com.example.activememory.inventory.application.query;
 
+import com.example.activememory.inventory.application.query.model.MyGymMachineReadModel;
 import com.example.activememory.inventory.application.query.model.MyGymReadModel;
 import org.springframework.stereotype.Service;
 
@@ -15,5 +16,9 @@ public class InventoryQueryService {
 
     public List<MyGymReadModel> getMyGym(Long userId) {
         return inventoryRepo.findMyGymByUserId(userId);
+    }
+
+    public List<MyGymMachineReadModel> getMyGymMachine(Long userId, Long myGymId) {
+        return inventoryRepo.findMyGymMachineByIdAndUserId(myGymId, userId);
     }
 }
