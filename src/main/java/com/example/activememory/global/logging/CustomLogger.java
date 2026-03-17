@@ -9,8 +9,10 @@ import com.example.activememory.global.logging.wrapper.CustomResponseWrapper;
 import com.fasterxml.jackson.core.json.JsonWriteFeature;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import io.micrometer.common.util.StringUtils;
 import org.slf4j.Logger;
 import org.springframework.http.MediaType;
+import org.springframework.security.core.parameters.P;
 import org.springframework.web.context.request.WebRequest;
 
 import java.io.PrintWriter;
@@ -34,22 +36,34 @@ public class CustomLogger {
             Map<String, Object> requestBodyJson = null;
             Map<String, Object> requestQueryJson = null;
 
-            if (request.getCachedBodyAsString() == null && request.getQueryString() != null) {
-                requestQueryJson = objectMapper.readValue(request.getQueryString(), new TypeReference<>() {
-                });
-            } else {
+            // NOTE: Query String 안전하게 추출
+            if (request.getParameterMap() != null && !request.getParameterMap().isEmpty()) {
+                requestQueryJson = new HashMap<>();
+
+                for (Map.Entry<String, String[]> entry : request.getParameterMap().entrySet()) {
+                    // NOTE: 배열로 들어오는 파라미터라면 ,로 이어서 저장
+                    requestQueryJson.put(entry.getKey(), String.join(",", entry.getValue()));
+                }
+            }
+
+            String bodyAsString = request.getCachedBodyAsString();
+
+            if (StringUtils.isEmpty(bodyAsString)) {
                 boolean isJsonBody = request.getContentType() != null
                         && request.getContentType().contains(MediaType.APPLICATION_JSON_VALUE);
 
-                if (!isJsonBody) {
-                    requestBodyJson = new HashMap<>() {
-                        {
-                            put("size", request.getContentLength());
-                        }
-                    };
+                if (isJsonBody) {
+                    try {
+                        requestBodyJson = objectMapper.readValue(bodyAsString, new TypeReference<Map<String, Object>>() {
+                        });
+                    } catch (Exception e) {
+                        // 만약에 Content-type이 JSON인데 실제 데이터가 깨져 있을 경우에
+                        requestBodyJson = new HashMap<>();
+                        requestBodyJson.put("body", bodyAsString);
+                    }
                 } else {
-                    requestBodyJson = objectMapper.readValue(request.getCachedBodyAsString(), new TypeReference<>() {
-                    });
+                    requestBodyJson = new HashMap<>();
+                    requestBodyJson.put("size", request.getContentLength());
                 }
             }
 

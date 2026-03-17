@@ -47,4 +47,11 @@ public class ExerciseQueryController {
     public ResponseEntity<SuccessResDto<List<StandardExerciseReadModel>>> getStandardExercises() {
         return Api.success(service.findStandardExercises(), HttpStatus.OK);
     }
+
+    @GetMapping("/muscles")
+    @ResponseStatus(HttpStatus.OK)
+    @Operation(summary = "등록된 근육 정보를 전달하는 API", description = "최종 수정일: 2026.03.11")
+    public ResponseEntity<SuccessResDto<List<?>>> getStandardMuscles() {
+        return Api.success(service.findStandardMuscles(), HttpStatus.OK);
+    }
 }

@@ -9,6 +9,7 @@ import com.example.activememory.reference.domain.exercise.vo.BodyPartCode;
 import com.example.activememory.reference.domain.exercise.vo.StandardExerciseId;
 import com.example.activememory.reference.domain.gym.vo.GymId;
 import jakarta.persistence.*;
+import lombok.Getter;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -33,6 +34,7 @@ public class MyGym extends BaseTimeEntity {
     @Column(name = "deleted_at")
     private LocalDateTime deletedAt;
 
+    @Getter
     @OneToMany(mappedBy = "myGym", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<CustomMachine> machines = new ArrayList<>();
 
@@ -66,5 +68,6 @@ public class MyGym extends BaseTimeEntity {
 
         return customMachine;
     }
+
 }
 

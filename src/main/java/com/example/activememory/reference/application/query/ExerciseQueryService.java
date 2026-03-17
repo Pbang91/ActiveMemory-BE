@@ -1,9 +1,7 @@
 package com.example.activememory.reference.application.query;
 
 import com.example.activememory.global.enums.ExerciseType;
-import com.example.activememory.reference.application.query.model.BodyPartReadModel;
-import com.example.activememory.reference.application.query.model.ExerciseTypeReadModel;
-import com.example.activememory.reference.application.query.model.StandardExerciseReadModel;
+import com.example.activememory.reference.application.query.model.*;
 import org.springframework.stereotype.Service;
 
 import java.util.Arrays;
@@ -30,5 +28,9 @@ public class ExerciseQueryService {
 
     public List<StandardExerciseReadModel> findStandardExercises() {
         return referenceRepo.findStandardExercises();
+    }
+
+    public List<MuscleReadModel> findStandardMuscles() {
+        return referenceRepo.findMuscles();
     }
 }

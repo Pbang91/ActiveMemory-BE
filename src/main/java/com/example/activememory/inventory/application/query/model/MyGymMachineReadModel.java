@@ -1,6 +1,5 @@
 package com.example.activememory.inventory.application.query.model;
 
-import com.example.activememory.inventory.domain.vo.CustomMachineId;
 import com.example.activememory.reference.domain.exercise.enums.MuscleRole;
 import com.example.activememory.reference.domain.exercise.vo.BodyPartCode;
 import com.example.activememory.reference.domain.exercise.vo.MuscleId;

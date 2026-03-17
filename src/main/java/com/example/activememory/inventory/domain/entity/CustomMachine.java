@@ -62,4 +62,15 @@ public class CustomMachine extends BaseTimeEntity {
         CustomMachineMuscle mapping = CustomMachineMuscle.create(this, muscleId, role);
         this.muscles.add(mapping);
     }
+
+    public void updateInfo(String name, StandardExerciseId standardExerciseId, BodyPartCode bodyPartCode, String memo) {
+        this.name = name;
+        this.standardExerciseId = standardExerciseId;
+        this.bodyPartCode = bodyPartCode;
+        this.memo = memo;
+    }
+
+    public void clearMuscles() {
+        this.muscles.clear();
+    }
 }

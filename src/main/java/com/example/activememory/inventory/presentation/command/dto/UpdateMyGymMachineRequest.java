@@ -1,7 +1,8 @@
 package com.example.activememory.inventory.presentation.command.dto;
 
 import com.example.activememory.account.user.domain.vo.UserId;
-import com.example.activememory.inventory.application.command.dto.RegisterMyGymMachineCommand;
+import com.example.activememory.inventory.application.command.dto.UpdateMyGymMachineCommand;
+import com.example.activememory.inventory.domain.vo.CustomMachineId;
 import com.example.activememory.inventory.domain.vo.MyGymId;
 import com.example.activememory.reference.domain.exercise.enums.MuscleRole;
 import com.example.activememory.reference.domain.exercise.vo.BodyPartCode;
@@ -15,7 +16,7 @@ import jakarta.validation.constraints.NotNull;
 import java.util.Collections;
 import java.util.List;
 
-public record RegisterMyGymMachineRequest(
+public record UpdateMyGymMachineRequest(
         @NotBlank
         @Schema(description = "기구 이름", example = "파라마운트 숄더 프레스")
         String name,
@@ -28,7 +29,7 @@ public record RegisterMyGymMachineRequest(
         @Schema(description = "근육 대분류", example = "SHOULDER")
         String bodyPartCode,
 
-        @ArraySchema(schema = @Schema(implementation = MuscleMappingData.class, description = "근육 정보 매핑 배열"))
+        @ArraySchema(schema = @Schema(implementation = RegisterMyGymMachineRequest.MuscleMappingData.class, description = "근육 정보 매핑 배열"))
         List<MuscleMappingData> muscleMappingDataList,
 
         @Schema(description = "메모 사항", example = "시트 세팅 3으로 설정해서 진행하면 느낌 좋음")
@@ -45,10 +46,11 @@ public record RegisterMyGymMachineRequest(
     ) {
     }
 
-    public RegisterMyGymMachineCommand toCommand(Long userId, Long myGymId) {
-        return new RegisterMyGymMachineCommand(
+    public UpdateMyGymMachineCommand toCommand(Long userId, Long myGymId, Long customMachineId) {
+        return new UpdateMyGymMachineCommand(
                 UserId.of(userId),
                 MyGymId.of(myGymId),
+                CustomMachineId.of(customMachineId),
                 name,
                 StandardExerciseId.of(standardExerciseId),
                 BodyPartCode.of(bodyPartCode),
@@ -57,7 +59,7 @@ public record RegisterMyGymMachineRequest(
                         : muscleMappingDataList
                         .stream()
                         .map((data) ->
-                                new RegisterMyGymMachineCommand.MuscleMappingData(
+                                new UpdateMyGymMachineCommand.MuscleMappingData(
                                         MuscleId.of(data.muscleId()),
                                         data.role()
                                 )

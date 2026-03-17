@@ -35,7 +35,7 @@ public class InventoryQueryController {
         return Api.success(service.getMyGym(userDetail.userId()), HttpStatus.OK);
     }
 
-    @GetMapping("/gym/machine/{myGymId}")
+    @GetMapping("/gym/{myGymId}/machine")
     @ResponseStatus(HttpStatus.OK)
     @Operation(summary = "내가 등록한 체육관 기구 정보를 전달하는 API", description = "최종 수정일: 2026.03.02")
     public ResponseEntity<SuccessResDto<List<MyGymMachineReadModel>>> getMyGymMachine(
