@@ -25,7 +25,8 @@ public class CustomMachineMuscle {
     @Column(nullable = false, length = 10)
     private MuscleRole role;
 
-    public static CustomMachineMuscle create(CustomMachine customMachine, MuscleId muscleId, MuscleRole role) {
+    // package-private
+    static CustomMachineMuscle create(CustomMachine customMachine, MuscleId muscleId, MuscleRole role) {
         CustomMachineMuscle mapping = new CustomMachineMuscle();
         mapping.customMachine = customMachine;
         mapping.muscleId = muscleId;

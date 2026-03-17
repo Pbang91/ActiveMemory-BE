@@ -1,9 +1,6 @@
 package com.example.activememory.reference.application.query;
 
-import com.example.activememory.reference.application.query.model.BodyPartReadModel;
-import com.example.activememory.reference.application.query.model.ExerciseTypeReadModel;
-import com.example.activememory.reference.application.query.model.MuscleReadModel;
-import com.example.activememory.reference.application.query.model.StandardExerciseReadModel;
+import com.example.activememory.reference.application.query.model.*;
 import com.example.activememory.reference.domain.exercise.entity.*;
 import com.example.activememory.reference.domain.exercise.enums.MuscleRole;
 import com.querydsl.core.types.Projections;
@@ -73,14 +70,14 @@ public class ExerciseQueryRepository {
                             ),
                             ex.getExerciseMuscles()
                                     .stream()
-                                    .map(map -> new MuscleReadModel(
+                                    .map(map -> new StandardExerciseMuscleReadModel(
                                             map.getMuscle().getMuscleId().value(),
                                             map.getMuscle().getName(),
                                             map.getRole()
                                     ))
                                     .sorted(Comparator
-                                            .<MuscleReadModel, Boolean>comparing(m -> MuscleRole.PRIMARY.equals(m.role()))
-                                            .thenComparing(MuscleReadModel::role)
+                                            .<StandardExerciseMuscleReadModel, Boolean>comparing(m -> MuscleRole.PRIMARY.equals(m.role()))
+                                            .thenComparing(StandardExerciseMuscleReadModel::role)
                                             .reversed()
                                     )
                                     .toList()
@@ -88,5 +85,15 @@ public class ExerciseQueryRepository {
                 })
                 .sorted(Comparator.comparing(StandardExerciseReadModel::id))
                 .toList();
+    }
+
+    public List<MuscleReadModel> findMuscles() {
+        return queryFactory.select(
+                Projections.constructor(
+                        MuscleReadModel.class,
+                        muscle.id,
+                        muscle.name
+                )
+        ).from(muscle).fetch();
     }
 }

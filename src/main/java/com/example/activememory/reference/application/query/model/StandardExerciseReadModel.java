@@ -30,7 +30,7 @@ public record StandardExerciseReadModel(
         @ArraySchema(
                 schema = @Schema(description = "운동 방법에 타게팅되는 소분류 근유")
         )
-        List<MuscleReadModel> muscles
+        List<StandardExerciseMuscleReadModel> muscles
 
 ) {
 }
